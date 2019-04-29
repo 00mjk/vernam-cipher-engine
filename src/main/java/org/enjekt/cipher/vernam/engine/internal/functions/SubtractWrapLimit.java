@@ -7,7 +7,7 @@ public class SubtractWrapLimit implements IntUnaryOperator {
     private final int[] keys;
     private final int limit;
     private final int wrap;
-    private int counter;
+    private int counter=0;
 
     public SubtractWrapLimit(int[] keys, int limit, int wrap) {
         this.keys = keys;
@@ -18,9 +18,15 @@ public class SubtractWrapLimit implements IntUnaryOperator {
 
     @Override
     public int applyAsInt(int operand) {
+
         int result = (operand - keys[counter++]);
-        if (result < limit)
+       // System.out.println("Subtract result: "+operand +"," + keys[counter-1] +","+result);
+        if (result < limit) {
+          //  System.out.println("Low result: "+operand +"," + keys[counter-1] +","+result);
             result += wrap;
+           // System.out.println("Modified subtract: "+result);
+
+        }
         return result;
 
     }

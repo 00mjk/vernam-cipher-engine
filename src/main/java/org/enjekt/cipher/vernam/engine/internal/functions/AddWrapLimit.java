@@ -21,7 +21,10 @@ public class AddWrapLimit implements IntUnaryOperator {
     public int applyAsInt(int operand) {
         int result = (operand + keys[counter++]);
         if (result > limit) {
+          //  System.out.println("Add: "+ operand +"," + keys[counter-1] +","+result);
             result -= wrap;
+          //  System.out.println("Modified add: "+result);
+
         }
         return result;
     }

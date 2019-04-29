@@ -29,7 +29,7 @@ public class UTF8CipherEngine {
 
         ValueComposer composer = new ValueComposer();
 
-        Arrays.stream(encryptedValues).map(new SubtractWrapLimit(encryptionKeys, lowerUTF8Limit, upperKeyRange)).forEach(composer);
+        Arrays.stream(encryptedValues).map(new SubtractWrapLimit(encryptionKeys, lowerUTF8Limit, upperKeyRange+1)).forEach(composer);
 
         return composer;
 
@@ -40,7 +40,7 @@ public class UTF8CipherEngine {
         int[] toEncrypt = value.chars().toArray();
         int[] keys = generator.nextRandomInts(toEncrypt.length, lowerKeyRange, upperKeyRange);
         EncryptedResultsHolder holder = new EncryptedResultsHolder(keys);
-        Arrays.stream(toEncrypt).map(new AddWrapLimit(keys, upperUTF8Limit, upperKeyRange)).forEach(holder);
+        Arrays.stream(toEncrypt).map(new AddWrapLimit(keys, upperUTF8Limit, upperKeyRange+1)).forEach(holder);
 
         return holder;
 
