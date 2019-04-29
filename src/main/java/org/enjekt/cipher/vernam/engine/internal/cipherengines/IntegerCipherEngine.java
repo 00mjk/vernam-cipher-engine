@@ -14,6 +14,7 @@ public class IntegerCipherEngine {
 
     private static final int LOWER_UTF8_LIMIT = 48;
     private static final int UPPER_UTF8_LIMIT = 57;
+    public static final int NEGATIVE = 45;
 
 
     /**
@@ -30,15 +31,16 @@ public class IntegerCipherEngine {
      */
     public Integer decrypt(IntegerWrapper message) {
         Integer value = message.getEncryptedValue();
-        Boolean isNegative = Boolean.FALSE;
-        if (value < 0) {
-            isNegative = Boolean.TRUE;
-            value = -value;
-        }
-        Integer returnValue = cipherEngine.decrypt(value.toString(), message.getEncryptionKeys()).getInteger();
-        if (isNegative)
-            returnValue = -returnValue;
-        return returnValue;
+
+
+        int[] returnValues = cipherEngine.decrypt(value.toString().chars().toArray(), message.getEncryptionKeys());
+        if (value < 0)
+            returnValues[0] = NEGATIVE;
+
+        ValueComposer composer = new ValueComposer();
+        Arrays.stream(returnValues).forEach(composer);
+
+        return composer.getInteger();
 
     }
 
@@ -50,22 +52,17 @@ public class IntegerCipherEngine {
      */
     public IntegerWrapper encrypt(Integer value) {
 
-        Boolean isNegative = Boolean.FALSE;
-        if (value < 0) {
-            isNegative = Boolean.TRUE;
-            value = -value;
-        }
 
-        EncryptedResultsHolder holder = cipherEngine.encrypt(value.toString());
+        EncryptedResultsHolder holder = cipherEngine.encrypt(value.toString().chars().toArray());
 
+        if (value < 0)
+            holder.getValues()[0] = NEGATIVE;
 
         ValueComposer composer = new ValueComposer();
         Arrays.stream(holder.getValues()).forEach(composer);
-        Integer returnValue = composer.getInteger();
-        if (isNegative)
-            returnValue = -returnValue;
 
-        return new IntegerWrapper(returnValue, holder.getKeys());
+
+        return new IntegerWrapper(composer.getInteger(), holder.getKeys());
 
     }
 

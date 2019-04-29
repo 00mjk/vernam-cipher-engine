@@ -1,6 +1,7 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.internal.functions.AddWrapLimit;
+import org.enjekt.cipher.vernam.engine.internal.functions.IntCollector;
 import org.enjekt.cipher.vernam.engine.internal.functions.SubtractWrapLimit;
 import org.enjekt.cipher.vernam.engine.internal.functions.ValueComposer;
 import org.enjekt.cipher.vernam.engine.internal.util.RandomSequenceGenerator;
@@ -36,17 +37,17 @@ public class UTF8CipherEngine {
     /**
      * Decrypt value composer.
      *
-     * @param toDecrypt        the toDecrypt
+     * @param values        the toDecrypt
      * @param encryptionKeys the encryption keys
      * @return the value composer
      */
-    public ValueComposer decrypt(String toDecrypt, int[] encryptionKeys) {
+    public int[] decrypt(int[] values, int[] encryptionKeys) {
 
         ValueComposer composer = new ValueComposer();
+        IntCollector collector = new IntCollector(values.length);
+        Arrays.stream(values).map(new SubtractWrapLimit(encryptionKeys, lowerUTF8Limit, upperKeyRange + 1)).forEach(collector);
 
-        toDecrypt.chars().map(new SubtractWrapLimit(encryptionKeys, lowerUTF8Limit, upperKeyRange + 1)).forEach(composer);
-
-        return composer;
+        return collector.getValues();
 
 
     }
@@ -54,14 +55,13 @@ public class UTF8CipherEngine {
     /**
      * Encrypt encrypted results holder.
      *
-     * @param value the value
+     * @param values the value
      * @return the encrypted results holder
      */
-    public EncryptedResultsHolder encrypt(String value) {
-        int[] toEncrypt = value.chars().toArray();
-        int[] keys = generator.nextRandomInts(toEncrypt.length, lowerKeyRange, upperKeyRange);
+    public EncryptedResultsHolder encrypt(int[] values) {
+        int[] keys = generator.nextRandomInts(values.length, lowerKeyRange, upperKeyRange);
         EncryptedResultsHolder holder = new EncryptedResultsHolder(keys);
-        Arrays.stream(toEncrypt).map(new AddWrapLimit(keys, upperUTF8Limit, upperKeyRange+1)).forEach(holder);
+        Arrays.stream(values).map(new AddWrapLimit(keys, upperUTF8Limit, upperKeyRange + 1)).forEach(holder);
 
         return holder;
 

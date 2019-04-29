@@ -31,7 +31,8 @@ public class StringCipherEngine {
      */
     public StringWrapper encrypt(String value) {
 
-        EncryptedResultsHolder holder = cipherEngine.encrypt(value);
+        EncryptedResultsHolder holder = cipherEngine.encrypt(value.chars().toArray());
+
         ValueComposer composer = new ValueComposer();
         Arrays.stream(holder.getValues()).forEach(composer);
         return new StringWrapper(composer.getString(), holder.getKeys());
@@ -46,7 +47,11 @@ public class StringCipherEngine {
      * @return the string
      */
     public String decrypt(StringWrapper wrapper) {
-        return cipherEngine.decrypt(wrapper.getEncryptedText(), wrapper.getEncryptionKeys()).getString();
+
+        int[] utf8Values = cipherEngine.decrypt(wrapper.getEncryptedText().chars().toArray(), wrapper.getEncryptionKeys());
+        ValueComposer composer = new ValueComposer();
+        Arrays.stream(utf8Values).forEach(composer);
+        return composer.getString();
     }
 
 
