@@ -13,14 +13,14 @@ public class UTF8CipherEngine {
 
     private final int lowerUTF8Limit;
     private final int upperUTF8Limit;
-    private final int lowerLimit;
-    private final int upperLimit;
+    private final int lowerKeyRange;
+    private final int upperKeyRange;
 
-    public UTF8CipherEngine(int lowerUTF8Limit, int upperUTF8Limit, int lowerLimit, int upperLimit) {
+    public UTF8CipherEngine(int lowerUTF8Limit, int upperUTF8Limit) {
         this.lowerUTF8Limit = lowerUTF8Limit;
         this.upperUTF8Limit = upperUTF8Limit;
-        this.lowerLimit = lowerLimit;
-        this.upperLimit = upperLimit;
+        this.lowerKeyRange=0;
+        this.upperKeyRange=upperUTF8Limit-lowerUTF8Limit;
     }
 
 
@@ -29,7 +29,7 @@ public class UTF8CipherEngine {
 
         ValueComposer composer = new ValueComposer();
 
-        Arrays.stream(encryptedValues).map(new SubtractWrapLimit(encryptionKeys, lowerUTF8Limit, upperLimit)).forEach(composer);
+        Arrays.stream(encryptedValues).map(new SubtractWrapLimit(encryptionKeys, lowerUTF8Limit, upperKeyRange)).forEach(composer);
 
         return composer;
 
@@ -38,11 +38,11 @@ public class UTF8CipherEngine {
 
     public EncryptedResultsHolder encrypt(String value) {
         int[] toEncrypt = value.chars().toArray();
-        ValueComposer valueComposer = new ValueComposer();
-        int[] keys = generator.nextRandomInts(toEncrypt.length, lowerLimit, upperLimit);
-        Arrays.stream(toEncrypt).map(new AddWrapLimit(keys, upperUTF8Limit, upperLimit)).forEach(valueComposer);
+        int[] keys = generator.nextRandomInts(toEncrypt.length, lowerKeyRange, upperKeyRange);
+        EncryptedResultsHolder holder = new EncryptedResultsHolder(keys);
+        Arrays.stream(toEncrypt).map(new AddWrapLimit(keys, upperUTF8Limit, upperKeyRange)).forEach(holder);
 
-        return new EncryptedResultsHolder(valueComposer, keys);
+        return holder;
 
 
     }

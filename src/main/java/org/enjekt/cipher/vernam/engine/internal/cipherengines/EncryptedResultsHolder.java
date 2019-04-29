@@ -2,20 +2,28 @@ package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.internal.functions.ValueComposer;
 
-public class EncryptedResultsHolder {
-    private final ValueComposer composer;
-    private final int[] keys;
+import java.util.function.IntConsumer;
 
-    public EncryptedResultsHolder(ValueComposer composer, int[] keys) {
-        this.composer = composer;
+public class EncryptedResultsHolder implements IntConsumer {
+    private final int[] values;
+    private final int[] keys;
+    private int i=0;
+
+    public EncryptedResultsHolder(int[] keys) {
+        this.values = new int[keys.length];
         this.keys = keys;
     }
 
-    public ValueComposer getComposer() {
-        return composer;
+    public int[] getValues() {
+        return values;
     }
 
     public int[] getKeys() {
         return keys;
+    }
+
+    @Override
+    public void accept(int value) {
+        this.values[i++]=value;
     }
 }
