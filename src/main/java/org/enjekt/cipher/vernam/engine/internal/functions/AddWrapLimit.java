@@ -16,7 +16,6 @@ public class AddWrapLimit implements IntUnaryOperator {
         this.wrap = wrap;
     }
 
-
     @Override
     public int applyAsInt(int operand) {
         int result = (operand + keys[counter++]);

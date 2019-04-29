@@ -36,16 +36,15 @@ public class UTF8CipherEngine {
     /**
      * Decrypt value composer.
      *
-     * @param message        the message
+     * @param toDecrypt        the toDecrypt
      * @param encryptionKeys the encryption keys
      * @return the value composer
      */
-    public ValueComposer decrypt(String message, int[] encryptionKeys) {
-        int[] encryptedValues = message.chars().toArray();
+    public ValueComposer decrypt(String toDecrypt, int[] encryptionKeys) {
 
         ValueComposer composer = new ValueComposer();
 
-        Arrays.stream(encryptedValues).map(new SubtractWrapLimit(encryptionKeys, lowerUTF8Limit, upperKeyRange+1)).forEach(composer);
+        toDecrypt.chars().map(new SubtractWrapLimit(encryptionKeys, lowerUTF8Limit, upperKeyRange + 1)).forEach(composer);
 
         return composer;
 

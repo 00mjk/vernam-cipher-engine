@@ -15,7 +15,6 @@ public class SubtractWrapLimit implements IntUnaryOperator {
         this.wrap = wrap;
     }
 
-
     @Override
     public int applyAsInt(int operand) {
 
