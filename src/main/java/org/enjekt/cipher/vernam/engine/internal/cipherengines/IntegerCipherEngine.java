@@ -20,7 +20,7 @@ public class IntegerCipherEngine {
      * The Cipher engine. Generlized generator for crating UTF8 values in the correct range and
      * handling the add/subtract/modulo operations appropriate for those characters.
      */
-    UTF8CipherEngine cipherEngine = new UTF8CipherEngine(LOWER_UTF8_LIMIT, UPPER_UTF8_LIMIT);
+    private UTF8CipherEngine cipherEngine = new UTF8CipherEngine(LOWER_UTF8_LIMIT, UPPER_UTF8_LIMIT);
 
     /**
      * Decrypt integer.
@@ -29,7 +29,16 @@ public class IntegerCipherEngine {
      * @return the integer
      */
     public Integer decrypt(IntegerWrapper message) {
-        return cipherEngine.decrypt(message.getEncryptedValue().toString(), message.getEncryptionKeys()).getInteger();
+        Integer value = message.getEncryptedValue();
+        Boolean isNegative = Boolean.FALSE;
+        if (value < 0) {
+            isNegative = Boolean.TRUE;
+            value = -value;
+        }
+        Integer returnValue = cipherEngine.decrypt(value.toString(), message.getEncryptionKeys()).getInteger();
+        if (isNegative)
+            returnValue = -returnValue;
+        return returnValue;
 
     }
 
@@ -40,15 +49,23 @@ public class IntegerCipherEngine {
      * @return the integer wrapper
      */
     public IntegerWrapper encrypt(Integer value) {
-        //TODO null check on value...
-        //TODO Only handle positive values currently so have to maintain sign
-        //and do abs here...
+
+        Boolean isNegative = Boolean.FALSE;
+        if (value < 0) {
+            isNegative = Boolean.TRUE;
+            value = -value;
+        }
+
         EncryptedResultsHolder holder = cipherEngine.encrypt(value.toString());
 
 
         ValueComposer composer = new ValueComposer();
         Arrays.stream(holder.getValues()).forEach(composer);
-        return new IntegerWrapper(composer.getInteger(), holder.getKeys());
+        Integer returnValue = composer.getInteger();
+        if (isNegative)
+            returnValue = -returnValue;
+
+        return new IntegerWrapper(returnValue, holder.getKeys());
 
     }
 

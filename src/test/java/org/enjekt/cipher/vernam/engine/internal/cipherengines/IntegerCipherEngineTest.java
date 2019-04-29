@@ -2,7 +2,6 @@ package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -18,8 +17,7 @@ public class IntegerCipherEngineTest {
     }
 
     @Test
-    @Ignore
-    public void testEncrypt() {
+    public void testValidLength() {
         Integer zip = 78757;
 
 
@@ -32,12 +30,13 @@ public class IntegerCipherEngineTest {
     }
 
     @Test
-    @Ignore("Negative is not currently handled...")
+    //  @Ignore("Negative is not currently handled...")
     public void testNegative() {
         Integer underTest = -190;
 
-        Integer decryptzip = doRoundTrip(underTest);
-        assertEquals(underTest, decryptzip);
+        Integer decrypted = doRoundTrip(underTest);
+        assertEquals(underTest, decrypted);
+        System.out.println(decrypted);
     }
 
     @Test
