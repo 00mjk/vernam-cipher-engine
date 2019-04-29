@@ -7,6 +7,9 @@ import org.enjekt.cipher.vernam.engine.internal.util.RandomSequenceGenerator;
 
 import java.util.Arrays;
 
+/**
+ * The type Utf 8 cipher engine. This is the general purpose engine for creating encrypted values.
+ */
 public class UTF8CipherEngine {
 
     private static final RandomSequenceGenerator generator = new RandomSequenceGenerator();
@@ -16,6 +19,12 @@ public class UTF8CipherEngine {
     private final int lowerKeyRange;
     private final int upperKeyRange;
 
+    /**
+     * Instantiates a new Utf 8 cipher engine.
+     *
+     * @param lowerUTF8Limit the lower utf 8 limit
+     * @param upperUTF8Limit the upper utf 8 limit
+     */
     public UTF8CipherEngine(int lowerUTF8Limit, int upperUTF8Limit) {
         this.lowerUTF8Limit = lowerUTF8Limit;
         this.upperUTF8Limit = upperUTF8Limit;
@@ -24,6 +33,13 @@ public class UTF8CipherEngine {
     }
 
 
+    /**
+     * Decrypt value composer.
+     *
+     * @param message        the message
+     * @param encryptionKeys the encryption keys
+     * @return the value composer
+     */
     public ValueComposer decrypt(String message, int[] encryptionKeys) {
         int[] encryptedValues = message.chars().toArray();
 
@@ -36,6 +52,12 @@ public class UTF8CipherEngine {
 
     }
 
+    /**
+     * Encrypt encrypted results holder.
+     *
+     * @param value the value
+     * @return the encrypted results holder
+     */
     public EncryptedResultsHolder encrypt(String value) {
         int[] toEncrypt = value.chars().toArray();
         int[] keys = generator.nextRandomInts(toEncrypt.length, lowerKeyRange, upperKeyRange);

@@ -20,8 +20,12 @@ public class IntegerCipherEngine {
     }
 
     public IntegerWrapper encrypt(Integer value) {
-
+        //TODO null check on value...
+        //TODO Only handle positive values currently so have to maintain sign
+        //and do abs here...
         EncryptedResultsHolder holder = cipherEngine.encrypt(value.toString());
+
+
         ValueComposer composer = new ValueComposer();
         Arrays.stream(holder.getValues()).forEach(composer);
         return new IntegerWrapper(composer.getInteger(), holder.getKeys());

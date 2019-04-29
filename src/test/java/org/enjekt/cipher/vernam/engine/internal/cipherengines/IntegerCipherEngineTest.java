@@ -32,22 +32,34 @@ public class IntegerCipherEngineTest {
     }
 
     @Test
-    public void testRoundTripIntegerEncryptDecrypt() {
-       //TODO Fence post error on 9
-       Integer zip =  1234590;
+    @Ignore("Negative is not currently handled...")
+    public void testNegative() {
+        Integer underTest = -190;
+
+        Integer decryptzip = doRoundTrip(underTest);
+        assertEquals(underTest, decryptzip);
+    }
+
+    @Test
+    public void testBoundariesRoundTrip() {
+        Integer underTest = 190;
 
 
-        for (int i = 0; i < 1000; i++) {
-            IntegerWrapper wrapper = engine.encrypt(zip);
-
-
-            Integer decryptzip = engine.decrypt(wrapper);
-            assertEquals(zip, decryptzip);
+        for (int i = 0; i < 10000; i++) {
+            Integer decryptzip = doRoundTrip(underTest);
+            assertEquals(underTest, decryptzip);
 
             //System.out.println(decryptzip);
         }
 
 
+    }
+
+    private Integer doRoundTrip(Integer underTest) {
+        IntegerWrapper wrapper = engine.encrypt(underTest);
+
+
+        return engine.decrypt(wrapper);
     }
 
 }
