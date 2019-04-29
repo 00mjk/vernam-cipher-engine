@@ -34,6 +34,8 @@ public class IntegerCipherEngine {
 
 
         int[] returnValues = cipherEngine.decrypt(value.toString().chars().toArray(), message.getEncryptionKeys());
+        //We need the - sign unencrypted for correct number parsing.
+
         if (value < 0)
             returnValues[0] = NEGATIVE;
 
@@ -55,6 +57,7 @@ public class IntegerCipherEngine {
 
         EncryptedResultsHolder holder = cipherEngine.encrypt(value.toString().chars().toArray());
 
+        //We need the - sign unencrypted for correct number parsing.
         if (value < 0)
             holder.getValues()[0] = NEGATIVE;
 
