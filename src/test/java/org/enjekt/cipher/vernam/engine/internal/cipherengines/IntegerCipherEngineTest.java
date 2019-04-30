@@ -4,6 +4,8 @@ import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.security.SecureRandom;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -24,13 +26,13 @@ public class IntegerCipherEngineTest {
         IntegerWrapper wrapper = engine.encrypt(zip);
 
         assertNotEquals(zip, wrapper.getEncryptedValue());
+        System.out.println(wrapper.getEncryptedValue().toString());
+
         assertEquals(zip.toString().length(), wrapper.getEncryptedValue().toString().length());
-        // System.out.println(wrapper.getEncryptedValue().toString());
 
     }
 
     @Test
-    //  @Ignore("Negative is not currently handled...")
     public void testNegative() {
         Integer underTest = -190;
 
@@ -44,21 +46,41 @@ public class IntegerCipherEngineTest {
         Integer underTest = 190;
 
 
-        for (int i = 0; i < 10000; i++) {
-            Integer decryptzip = doRoundTrip(underTest);
-            assertEquals(underTest, decryptzip);
+        Integer decrypted = doRoundTrip(underTest);
+        assertEquals(underTest, decrypted);
 
-            //System.out.println(decryptzip);
+        //System.out.println(decrypted);
+
+
+
+    }
+
+    SecureRandom random = new SecureRandom();
+
+    @Test
+    public void testBulkRandom() {
+        int upperbound = 10000;
+        int lowerbound = -10000;
+
+        for (int i = 0; i < 100000; i++) {
+            Integer underTest = random.nextInt(upperbound - lowerbound) + lowerbound;
+            IntegerWrapper wrapper = engine.encrypt(underTest);
+
+            Integer decrypted = engine.decrypt(wrapper);
+            if (!decrypted.equals(underTest))
+                System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
+
+            assertEquals(underTest, decrypted);
+
         }
 
 
     }
 
-    private Integer doRoundTrip(Integer underTest) {
-        IntegerWrapper wrapper = engine.encrypt(underTest);
+    public Integer doRoundTrip(Integer value) {
+        IntegerWrapper wrapper = engine.encrypt(value);
 
-
-        return engine.decrypt(wrapper);
+        Integer decrypted = engine.decrypt(wrapper);
+        return decrypted;
     }
-
 }

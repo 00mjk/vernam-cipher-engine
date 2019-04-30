@@ -57,7 +57,6 @@ public class UTF8CipherEngine {
      * @return the encrypted results holder
      */
     public EncryptedResultsHolder encrypt(int[] values) {
-        //TODO The values could be used in the holder to avoid creating a new array...
         int[] keys = generator.nextRandomInts(values.length, lowerKeyRange, upperKeyRange);
         EncryptedResultsHolder holder = new EncryptedResultsHolder(keys);
         Arrays.stream(values).map(new AddWrapLimit(keys, upperUTF8Limit, upperKeyRange + 1)).forEach(holder);

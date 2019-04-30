@@ -32,17 +32,21 @@ public class IntegerCipherEngine {
     public Integer decrypt(IntegerWrapper message) {
         Integer value = message.getEncryptedValue();
 
-
-        int[] returnValues = cipherEngine.decrypt(value.toString().chars().toArray(), message.getEncryptionKeys());
-        //We need the - sign unencrypted for correct number parsing.
-
+        Integer encyrptionValue = value;
         if (value < 0)
-            returnValues[0] = NEGATIVE;
+            encyrptionValue = -value;
+
+        int[] returnValues = cipherEngine.decrypt(encyrptionValue.toString().chars().toArray(), message.getEncryptionKeys());
+        //We need the - sign unencrypted for correct number parsing.
 
         ValueComposer composer = new ValueComposer();
         Arrays.stream(returnValues).forEach(composer);
+        Integer returnVal = composer.getInteger();
+        //We need the - sign unencrypted for correct number parsing.
+        if (value < 0)
+            returnVal = -returnVal;
 
-        return composer.getInteger();
+        return returnVal;
 
     }
 
@@ -54,18 +58,24 @@ public class IntegerCipherEngine {
      */
     public IntegerWrapper encrypt(Integer value) {
 
-
-        EncryptedResultsHolder holder = cipherEngine.encrypt(value.toString().chars().toArray());
-
-        //We need the - sign unencrypted for correct number parsing.
+        Integer encyrptionValue = value;
         if (value < 0)
-            holder.getValues()[0] = NEGATIVE;
+            encyrptionValue = -value;
+
+        EncryptedResultsHolder holder = cipherEngine.encrypt(encyrptionValue.toString().chars().toArray());
+
+        //No leading zero...
+        while (holder.getValues()[0] == LOWER_UTF8_LIMIT)
+            holder = cipherEngine.encrypt(encyrptionValue.toString().chars().toArray());
 
         ValueComposer composer = new ValueComposer();
         Arrays.stream(holder.getValues()).forEach(composer);
 
-
-        return new IntegerWrapper(composer.getInteger(), holder.getKeys());
+        Integer returnVal = composer.getInteger();
+        //We need the - sign unencrypted for correct number parsing.
+        if (value < 0)
+            returnVal = -returnVal;
+        return new IntegerWrapper(returnVal, holder.getKeys());
 
     }
 
