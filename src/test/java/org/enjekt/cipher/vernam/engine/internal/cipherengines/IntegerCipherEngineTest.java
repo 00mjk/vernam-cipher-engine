@@ -59,12 +59,10 @@ public class IntegerCipherEngineTest {
 
     @Test
     public void testBulkRandom() {
-        int upperbound = 10000;
-        int lowerbound = -10000;
 
-        for (int i = 0; i < 100000; i++) {
+
+        for (int i = 0; i < 1000000; i++) {
             Integer underTest = random.nextInt();
-            //  Integer underTest=random.nextInt();
             IntegerWrapper wrapper = engine.encrypt(underTest);
 
             Integer decrypted = engine.decrypt(wrapper);
@@ -76,6 +74,23 @@ public class IntegerCipherEngineTest {
         }
 
 
+    }
+
+    @Test
+    public void testMinMax() {
+        Integer underTest = Integer.MAX_VALUE;
+        Integer decrypted = doRoundTrip(underTest);
+        if (!decrypted.equals(underTest))
+            System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
+
+        assertEquals(underTest, decrypted);
+
+        underTest = Integer.MIN_VALUE - 1;
+        decrypted = doRoundTrip(underTest);
+        if (!decrypted.equals(underTest))
+            System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
+
+        assertEquals(underTest, decrypted);
     }
 
     public Integer doRoundTrip(Integer value) {
