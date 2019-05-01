@@ -9,13 +9,13 @@ import java.security.SecureRandom;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class IntegerCipherEngineTest {
+public class RawIntegerCipherEngineTest {
 
-    private IntegerCipherEngine engine;
+    private RawIntegerCipherEngine engine;
 
     @Before
     public void init() {
-        engine = new IntegerCipherEngine();
+        engine = new RawIntegerCipherEngine();
     }
 
     @Test
@@ -50,7 +50,6 @@ public class IntegerCipherEngineTest {
         assertEquals(underTest, decrypted);
 
         //System.out.println(decrypted);
-
 
 
     }

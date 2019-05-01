@@ -2,6 +2,8 @@ package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
 import org.enjekt.cipher.vernam.engine.internal.functions.IntegerComposer;
+import org.enjekt.cipher.vernam.engine.internal.functions.IntegerDecryptor;
+import org.enjekt.cipher.vernam.engine.internal.functions.IntegerEncryptor;
 
 import java.util.Arrays;
 
@@ -14,14 +16,31 @@ public class IntegerCipherEngine {
 
     private static final int LOWER_UTF8_LIMIT = 48;
     private static final int UPPER_UTF8_LIMIT = 57;
-    public static final int NEGATIVE = 45;
 
 
     /**
-     * The Cipher engine. Generlized generator for crating UTF8 values in the correct range and
-     * handling the add/subtract/modulo operations appropriate for those characters.
+
+     /**
+     * Encrypt integer wrapper.
+     *
+     * @param value the value
+     * @return the integer wrapper
      */
-    private UTF8CipherEngine cipherEngine = new UTF8CipherEngine(LOWER_UTF8_LIMIT, UPPER_UTF8_LIMIT);
+    public IntegerWrapper encrypt(Integer value) {
+
+        Boolean negative = value < 0;
+        if (negative)
+            value = -value;
+
+        int[] values = value.toString().chars().toArray();
+        int[] keys = new int[values.length];
+
+        IntegerComposer composer = new IntegerComposer(negative);
+        Arrays.stream(values).map(new IntegerEncryptor(keys)).forEach(composer);
+        return new IntegerWrapper(composer.getInteger(), keys);
+
+    }
+
 
     /**
      * Decrypt integer.
@@ -35,36 +54,9 @@ public class IntegerCipherEngine {
         if (negative)
             value = -value;
 
-        int[] returnValues = cipherEngine.decrypt(value.toString().chars().toArray(), message.getEncryptionKeys());
-        //We need the - sign unencrypted for correct number parsing.
-
         IntegerComposer composer = new IntegerComposer(negative);
-        Arrays.stream(returnValues).forEach(composer);
+        Arrays.stream(value.toString().chars().toArray()).map(new IntegerDecryptor(message.getEncryptionKeys())).forEach(composer);
         return composer.getInteger();
-
-    }
-
-    /**
-     * Encrypt integer wrapper.
-     *
-     * @param value the value
-     * @return the integer wrapper
-     */
-    public IntegerWrapper encrypt(Integer value) {
-
-        Boolean negative = value < 0;
-        if (negative)
-            value = -value;
-        EncryptedResultsHolder holder = cipherEngine.encrypt(value.toString().chars().toArray());
-
-        //No leading zero...
-        while (holder.getValues()[0] == LOWER_UTF8_LIMIT)
-            holder = cipherEngine.encrypt(value.toString().chars().toArray());
-
-        IntegerComposer composer = new IntegerComposer(negative);
-        Arrays.stream(holder.getValues()).forEach(composer);
-
-        return new IntegerWrapper(composer.getInteger(), holder.getKeys());
 
     }
 
