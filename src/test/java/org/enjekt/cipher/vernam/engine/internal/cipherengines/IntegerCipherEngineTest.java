@@ -22,7 +22,6 @@ public class IntegerCipherEngineTest {
     public void testValidLength() {
         Integer zip = 78757;
 
-
         IntegerWrapper wrapper = engine.encrypt(zip);
 
         assertNotEquals(zip, wrapper.getEncryptedValue());
@@ -45,13 +44,10 @@ public class IntegerCipherEngineTest {
     public void testBoundariesRoundTrip() {
         Integer underTest = 190;
 
-
         Integer decrypted = doRoundTrip(underTest);
         assertEquals(underTest, decrypted);
 
         //System.out.println(decrypted);
-
-
 
     }
 

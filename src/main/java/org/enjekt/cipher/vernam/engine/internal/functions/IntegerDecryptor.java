@@ -5,13 +5,10 @@ import java.util.function.IntUnaryOperator;
 
 public class IntegerDecryptor implements IntUnaryOperator {
 
-    private static SecureRandom secureRandom = new SecureRandom();
-
-
     private static final int LOWER_UTF8_LIMIT = 48;
     private static final int UPPER_UTF8_LIMIT = 57;
-
     public static final int MODULO = (UPPER_UTF8_LIMIT - LOWER_UTF8_LIMIT + 1);
+    private static SecureRandom secureRandom = new SecureRandom();
     private final int[] keys;
     int count = 0;
 

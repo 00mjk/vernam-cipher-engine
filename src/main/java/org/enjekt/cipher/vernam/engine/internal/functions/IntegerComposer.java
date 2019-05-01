@@ -3,8 +3,8 @@ package org.enjekt.cipher.vernam.engine.internal.functions;
 import java.util.function.IntConsumer;
 
 public class IntegerComposer implements IntConsumer {
-    private final StringBuffer buffer = new StringBuffer();
     public static final int NEGATIVE = 45;
+    private final StringBuffer buffer = new StringBuffer();
 
     public IntegerComposer(Boolean isNegative) {
         if (isNegative)

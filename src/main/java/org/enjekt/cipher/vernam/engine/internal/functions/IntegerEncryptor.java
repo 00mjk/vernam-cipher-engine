@@ -5,18 +5,15 @@ import java.util.function.IntUnaryOperator;
 
 public class IntegerEncryptor implements IntUnaryOperator {
 
-    private static SecureRandom secureRandom = new SecureRandom();
-
-
     private static final int LOWER_UTF8_LIMIT = 48;
     private static final int UPPER_UTF8_LIMIT = 57;
     private static final int UPPER_RANGE = 9;
     private static final int MODULO = 10;
     private final static int[] MAX = new Integer(Integer.MAX_VALUE).toString().chars().toArray();
-    private Boolean allValid;
+    private static SecureRandom secureRandom = new SecureRandom();
     private final int[] keys;
-
     int count = 0;
+    private Boolean allValid;
 
     public IntegerEncryptor(int[] keys) {
         this.keys = keys;

@@ -28,15 +28,15 @@ public class UTF8CipherEngine {
     public UTF8CipherEngine(int lowerUTF8Limit, int upperUTF8Limit) {
         this.lowerUTF8Limit = lowerUTF8Limit;
         this.upperUTF8Limit = upperUTF8Limit;
-        this.lowerKeyRange=0;
-        this.upperKeyRange=upperUTF8Limit-lowerUTF8Limit;
+        this.lowerKeyRange = 0;
+        this.upperKeyRange = upperUTF8Limit - lowerUTF8Limit;
     }
 
 
     /**
      * Decrypt value composer.
      *
-     * @param values        the toDecrypt
+     * @param values         the toDecrypt
      * @param encryptionKeys the encryption keys
      * @return the value composer
      */

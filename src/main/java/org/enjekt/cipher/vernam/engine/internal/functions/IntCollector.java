@@ -3,8 +3,8 @@ package org.enjekt.cipher.vernam.engine.internal.functions;
 import java.util.function.IntConsumer;
 
 public class IntCollector implements IntConsumer {
-    private int counter;
     private final int[] values;
+    private int counter;
 
 
     public IntCollector(int length) {
