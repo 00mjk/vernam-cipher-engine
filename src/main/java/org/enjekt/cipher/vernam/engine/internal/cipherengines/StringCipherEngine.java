@@ -2,7 +2,7 @@ package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 
 import org.enjekt.cipher.vernam.engine.api.StringWrapper;
-import org.enjekt.cipher.vernam.engine.internal.functions.ValueComposer;
+import org.enjekt.cipher.vernam.engine.internal.functions.StringComposer;
 
 import java.util.Arrays;
 
@@ -33,7 +33,7 @@ public class StringCipherEngine {
 
         EncryptedResultsHolder holder = cipherEngine.encrypt(value.chars().toArray());
 
-        ValueComposer composer = new ValueComposer();
+        StringComposer composer = new StringComposer();
         Arrays.stream(holder.getValues()).forEach(composer);
         return new StringWrapper(composer.getString(), holder.getKeys());
 
@@ -49,7 +49,7 @@ public class StringCipherEngine {
     public String decrypt(StringWrapper wrapper) {
 
         int[] utf8Values = cipherEngine.decrypt(wrapper.getEncryptedText().chars().toArray(), wrapper.getEncryptionKeys());
-        ValueComposer composer = new ValueComposer();
+        StringComposer composer = new StringComposer();
         Arrays.stream(utf8Values).forEach(composer);
         return composer.getString();
     }

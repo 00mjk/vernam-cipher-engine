@@ -2,10 +2,10 @@ package org.enjekt.cipher.vernam.engine.internal.functions;
 
 import java.util.function.IntConsumer;
 
-public class ValueComposer implements IntConsumer {
+public class StringComposer implements IntConsumer {
     private final StringBuffer buffer = new StringBuffer();
 
-    public ValueComposer() {
+    public StringComposer() {
 
     }
 
@@ -18,8 +18,5 @@ public class ValueComposer implements IntConsumer {
         return buffer.toString();
     }
 
-    public Integer getInteger() {
-        return Integer.valueOf(buffer.toString());
-    }
 
 }

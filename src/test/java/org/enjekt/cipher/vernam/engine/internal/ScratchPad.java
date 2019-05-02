@@ -1,15 +1,44 @@
 package org.enjekt.cipher.vernam.engine.internal;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
+import java.nio.LongBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.BitSet;
 
 public class ScratchPad {
+    private static final int LOWER_UTF8_LIMIT = 48;
     SecureRandom secureRandom = new SecureRandom();
     String toTest = "I see dead sheep...sometimes...";
 
     @Test
+    public void testBits() {
+        Long longVal = new Long(78757);
+        String longValStr = longVal.toString();
+        LongBuffer lBuffer = LongBuffer.allocate(longValStr.length());
+        longValStr.chars().forEach(i -> lBuffer.put(i - LOWER_UTF8_LIMIT));
+        System.out.println();
+        long[] vals = lBuffer.array();
+        BitSet bs = BitSet.valueOf(vals);
+        long[] otp = secureRandom.longs(vals.length, 0, 9).toArray();
+        // System.out.println(otp.length);
+        BitSet pad = BitSet.valueOf(otp);
+        Arrays.stream(bs.toLongArray()).forEach(l -> System.out.print(l));
+        System.out.println();
+        bs.xor(pad);
+        Arrays.stream(bs.toLongArray()).forEach(l -> System.out.print(l));
+        System.out.println();
+        bs.xor(pad);
+        StringBuffer buffer = new StringBuffer();
+        Arrays.stream(bs.toLongArray()).forEach(l -> buffer.append(l));
+        System.out.println(buffer.toString());
+    }
+
+    @Test
+    @Ignore
     public void scratch() {
         char[] test = toTest.toCharArray();
     }

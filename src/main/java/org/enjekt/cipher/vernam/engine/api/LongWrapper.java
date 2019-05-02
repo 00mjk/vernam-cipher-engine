@@ -1,17 +1,17 @@
 package org.enjekt.cipher.vernam.engine.api;
 
-public class IntegerWrapper {
+public class LongWrapper {
 
 
-    private final Integer encryptedValue;
+    private final Long encryptedValue;
     private final int[] oneTimePad;
 
-    public IntegerWrapper(Integer encryptedValue, int[] oneTimePad) {
+    public LongWrapper(Long encryptedValue, int[] oneTimePad) {
         this.encryptedValue = encryptedValue;
         this.oneTimePad = oneTimePad;
     }
 
-    public Integer getEncryptedValue() {
+    public Long getEncryptedValue() {
         return encryptedValue;
     }
 

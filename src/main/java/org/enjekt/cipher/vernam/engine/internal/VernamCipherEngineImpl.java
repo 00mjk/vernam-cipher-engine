@@ -28,13 +28,11 @@ public class VernamCipherEngineImpl implements VernamCipherEngine {
     public Integer decrypt(IntegerWrapper message) {
         return integerCipherEngine.decrypt(message);
 
-
     }
 
     @Override
     public IntegerWrapper encrypt(Integer value) {
         return integerCipherEngine.encrypt(value);
-
 
     }
 

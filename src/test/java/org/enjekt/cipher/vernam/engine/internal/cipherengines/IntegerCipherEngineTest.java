@@ -11,6 +11,7 @@ import static org.junit.Assert.assertNotEquals;
 
 public class IntegerCipherEngineTest {
 
+    SecureRandom random = new SecureRandom();
     private IntegerCipherEngine engine;
 
     @Before
@@ -51,13 +52,12 @@ public class IntegerCipherEngineTest {
 
     }
 
-    SecureRandom random = new SecureRandom();
-
     @Test
     public void testBulkRandom() {
 
 
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 100000; i++) {
+
             Integer underTest = random.nextInt();
             IntegerWrapper wrapper = engine.encrypt(underTest);
 
@@ -66,7 +66,6 @@ public class IntegerCipherEngineTest {
                 System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
 
             assertEquals(underTest, decrypted);
-
         }
 
 
@@ -81,6 +80,8 @@ public class IntegerCipherEngineTest {
 
         assertEquals(underTest, decrypted);
 
+        //TODO The lower bound is 1 less than upper and the cipher engine should
+        //be cahnged to handle it.
         underTest = Integer.MIN_VALUE - 1;
         decrypted = doRoundTrip(underTest);
         if (!decrypted.equals(underTest))

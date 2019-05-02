@@ -1,9 +1,10 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
-import org.enjekt.cipher.vernam.engine.internal.functions.IntegerComposer;
-import org.enjekt.cipher.vernam.engine.internal.functions.IntegerDecryptor;
-import org.enjekt.cipher.vernam.engine.internal.functions.IntegerEncryptor;
+import org.enjekt.cipher.vernam.engine.internal.functions.DigitDecryptor;
+import org.enjekt.cipher.vernam.engine.internal.functions.DigitEncyryptor;
+import org.enjekt.cipher.vernam.engine.internal.functions.IntegerValidator;
+import org.enjekt.cipher.vernam.engine.internal.functions.NumberComposer;
 
 import java.util.Arrays;
 
@@ -14,12 +15,12 @@ import java.util.Arrays;
  */
 public class IntegerCipherEngine {
 
+    private static final int[] MAX = new Integer(Integer.MAX_VALUE).toString().chars().toArray();
     private static final int LOWER_UTF8_LIMIT = 48;
     private static final int UPPER_UTF8_LIMIT = 57;
 
-
+    private int counter;
     /**
-     * /**
      * Encrypt integer wrapper.
      *
      * @param value the value
@@ -34,8 +35,16 @@ public class IntegerCipherEngine {
         int[] values = value.toString().chars().toArray();
         int[] keys = new int[values.length];
 
-        IntegerComposer composer = new IntegerComposer(negative);
-        Arrays.stream(values).map(new IntegerEncryptor(keys)).forEach(composer);
+        NumberComposer composer;
+        IntegerValidator validator;
+        do {
+            composer = new NumberComposer(negative);
+            validator = new IntegerValidator(values.length);
+            Arrays.stream(values).map(new DigitEncyryptor(keys)).map(validator).forEach(composer);
+            Boolean isValid = validator.isValid();
+            if (!isValid)
+                System.out.println(composer.getString() + " is not valid size happend this many times: " + ++counter);
+        } while (!validator.isValid());
         return new IntegerWrapper(composer.getInteger(), keys);
 
     }
@@ -53,8 +62,8 @@ public class IntegerCipherEngine {
         if (negative)
             value = -value;
 
-        IntegerComposer composer = new IntegerComposer(negative);
-        Arrays.stream(value.toString().chars().toArray()).map(new IntegerDecryptor(message.getEncryptionKeys())).forEach(composer);
+        NumberComposer composer = new NumberComposer(negative);
+        Arrays.stream(value.toString().chars().toArray()).map(new DigitDecryptor(message.getOneTimePad())).forEach(composer);
         return composer.getInteger();
 
     }
