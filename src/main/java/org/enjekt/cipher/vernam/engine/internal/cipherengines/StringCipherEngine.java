@@ -35,7 +35,7 @@ public class StringCipherEngine {
 
         StringComposer composer = new StringComposer();
         Arrays.stream(holder.getValues()).forEach(composer);
-        return new StringWrapper(composer.getString(), holder.getKeys());
+        return new StringWrapper(composer.getString(), holder.getOneTimePad());
 
     }
 

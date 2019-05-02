@@ -3,7 +3,7 @@ package org.enjekt.cipher.vernam.engine.internal.functions;
 import java.security.SecureRandom;
 import java.util.function.IntUnaryOperator;
 
-public class DigitEncyryptor implements IntUnaryOperator {
+public class DigitEncryptor implements IntUnaryOperator {
 
     //private static final int LOWER_UTF8_LIMIT = 48;
     private static final int UPPER_UTF8_LIMIT = 57;
@@ -15,7 +15,7 @@ public class DigitEncyryptor implements IntUnaryOperator {
     private int count = 0;
     private final DigitValidator validator;
 
-    public DigitEncyryptor(int[] keys, DigitValidator validator) {
+    public DigitEncryptor(int[] keys, DigitValidator validator) {
         this.keys = keys;
         this.validator = validator;
 

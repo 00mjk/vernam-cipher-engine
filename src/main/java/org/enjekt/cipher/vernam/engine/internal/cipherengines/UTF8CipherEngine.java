@@ -3,8 +3,8 @@ package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 import org.enjekt.cipher.vernam.engine.internal.functions.AddWrapLimit;
 import org.enjekt.cipher.vernam.engine.internal.functions.IntCollector;
 import org.enjekt.cipher.vernam.engine.internal.functions.SubtractWrapLimit;
-import org.enjekt.cipher.vernam.engine.internal.util.RandomSequenceGenerator;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 
 /**
@@ -12,7 +12,7 @@ import java.util.Arrays;
  */
 public class UTF8CipherEngine {
 
-    private static final RandomSequenceGenerator generator = new RandomSequenceGenerator();
+    private static SecureRandom secureRandom = new SecureRandom();
 
     private final int lowerUTF8Limit;
     private final int upperUTF8Limit;
@@ -57,7 +57,7 @@ public class UTF8CipherEngine {
      * @return the encrypted results holder
      */
     public EncryptedResultsHolder encrypt(int[] values) {
-        int[] keys = generator.nextRandomInts(values.length, lowerKeyRange, upperKeyRange);
+        int[] keys = secureRandom.ints(values.length, lowerKeyRange, upperKeyRange).toArray();
         EncryptedResultsHolder holder = new EncryptedResultsHolder(keys);
         Arrays.stream(values).map(new AddWrapLimit(keys, upperUTF8Limit, upperKeyRange + 1)).forEach(holder);
 

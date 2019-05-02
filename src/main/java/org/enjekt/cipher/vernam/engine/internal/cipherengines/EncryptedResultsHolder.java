@@ -4,20 +4,20 @@ import java.util.function.IntConsumer;
 
 public class EncryptedResultsHolder implements IntConsumer {
     private final int[] values;
-    private final int[] keys;
+    private final int[] oneTimePad;
     private int i = 0;
 
     public EncryptedResultsHolder(int[] keys) {
         this.values = new int[keys.length];
-        this.keys = keys;
+        this.oneTimePad = keys;
     }
 
     public int[] getValues() {
         return values;
     }
 
-    public int[] getKeys() {
-        return keys;
+    public int[] getOneTimePad() {
+        return oneTimePad;
     }
 
     @Override

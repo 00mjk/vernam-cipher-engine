@@ -18,7 +18,9 @@
         <skip.attachment>true</skip.attachment>
         <target.version>1.8</target.version>
         <source.version>1.8</source.version>
-        <jboss.fuse.bom.version>6.3.0.redhat-389</jboss.fuse.bom.version>
+        <!--
+                <jboss.fuse.bom.version>6.3.0.redhat-389</jboss.fuse.bom.version>
+        -->
         <!-- Plugin Versions -->
         <compiler-plugin-version>3.7.0</compiler-plugin-version>
         <bundle-plugin-version>3.3.0</bundle-plugin-version>
@@ -46,13 +48,29 @@
 
             <!-- Import Fuse Dependency Management via BOM -->
             <!-- https://mvnrepository.com/artifact/org.jboss.fuse.bom/jboss-fuse-parent -->
+            <!--            <dependency>
+                            <groupId>org.jboss.fuse.bom</groupId>
+                            <artifactId>jboss-fuse-parent</artifactId>
+                            <version>6.3.0.redhat-389</version>
+                            <type>pom</type>
+                            <scope>import</scope>
+                        </dependency>-->
+            <!-- https://mvnrepository.com/artifact/org.apache.karaf/apache-karaf -->
             <dependency>
-                <groupId>org.jboss.fuse.bom</groupId>
-                <artifactId>jboss-fuse-parent</artifactId>
-                <version>6.3.0.redhat-389</version>
+                <groupId>org.apache.karaf</groupId>
+                <artifactId>apache-karaf</artifactId>
+                <version>4.2.5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.camel/camel-bom -->
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-bom</artifactId>
+                <version>2.23.2</version>
+                <type>pom</type>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
@@ -86,24 +104,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>16.0.3</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>16.0.3</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>16.0.3</version>
-            <scope>compile</scope>
         </dependency>
 
 

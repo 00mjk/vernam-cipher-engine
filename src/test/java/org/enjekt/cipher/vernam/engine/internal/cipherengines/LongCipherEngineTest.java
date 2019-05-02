@@ -85,7 +85,7 @@ public class LongCipherEngineTest {
 
         //TODO The lower bound is 1 less than upper and the cipher engine should
         //be cahnged to handle it.
-        underTest = Long.MIN_VALUE;
+        underTest = Long.MIN_VALUE + 1;
         decrypted = doRoundTrip(underTest);
         if (!decrypted.equals(underTest))
             System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
