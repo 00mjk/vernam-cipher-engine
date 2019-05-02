@@ -1,6 +1,7 @@
 package org.enjekt.cipher.vernam.engine.internal.functions;
 
-import java.security.SecureRandom;
+import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
+
 import java.util.function.IntUnaryOperator;
 
 public class DigitEncryptor implements IntUnaryOperator {
@@ -9,11 +10,11 @@ public class DigitEncryptor implements IntUnaryOperator {
     private static final int UPPER_UTF8_LIMIT = 57;
     private static final int UPPER_RANGE = 9;
     private static final int MODULO = 10;
-    private static final SecureRandom secureRandom = new SecureRandom();
+    private static final RandomNumberGenerator secureRandom = new RandomNumberGenerator();
 
     private final int[] keys;
-    private int count = 0;
     private final DigitValidator validator;
+    private int count = 0;
 
     public DigitEncryptor(int[] keys, DigitValidator validator) {
         this.keys = keys;
@@ -36,7 +37,7 @@ public class DigitEncryptor implements IntUnaryOperator {
 
 
     private int getPad() {
-        return secureRandom.nextInt(UPPER_RANGE);
+        return RandomNumberGenerator.nextInt(UPPER_RANGE);
     }
 
     private int doEncrypt(int operand, int encryptionKey) {

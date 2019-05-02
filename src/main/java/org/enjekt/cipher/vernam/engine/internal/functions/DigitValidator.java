@@ -2,8 +2,8 @@ package org.enjekt.cipher.vernam.engine.internal.functions;
 
 
 public class DigitValidator {
-    private final int[] MAX;
     private static final int LOWER_UTF8_LIMIT = 48;
+    private final int[] MAX;
     private Boolean allValid;
 
     public DigitValidator(int length, int[] MAX) {

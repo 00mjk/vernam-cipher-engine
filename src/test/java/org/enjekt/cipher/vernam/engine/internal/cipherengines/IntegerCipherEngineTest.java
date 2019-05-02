@@ -1,17 +1,16 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
+import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.security.SecureRandom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class IntegerCipherEngineTest {
 
-    SecureRandom random = new SecureRandom();
+    RandomNumberGenerator random = new RandomNumberGenerator();
     private IntegerCipherEngine engine;
 
     @Before
@@ -58,7 +57,7 @@ public class IntegerCipherEngineTest {
 
         for (int i = 0; i < 1000000; i++) {
 
-            Integer underTest = random.nextInt();
+            Integer underTest = RandomNumberGenerator.nextInt();
             IntegerWrapper wrapper = engine.encrypt(underTest);
 
             Integer decrypted = engine.decrypt(wrapper);

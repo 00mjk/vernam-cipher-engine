@@ -1,10 +1,9 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.api.LongWrapper;
+import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.security.SecureRandom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -12,7 +11,7 @@ import static org.junit.Assert.assertNotEquals;
 public class LongCipherEngineTest {
 
     private LongCipherEngine engine;
-    private SecureRandom random = new SecureRandom();
+    private RandomNumberGenerator random = new RandomNumberGenerator();
 
     @Before
     public void init() {
@@ -58,7 +57,7 @@ public class LongCipherEngineTest {
 
         for (int i = 0; i < 10000; i++) {
 
-            Long underTest = random.nextLong();
+            Long underTest = RandomNumberGenerator.nextLong();
             LongWrapper wrapper = engine.encrypt(underTest);
             // System.out.println("Encrypted: "+ wrapper.getEncryptedValue());
             Long decrypted = engine.decrypt(wrapper);
