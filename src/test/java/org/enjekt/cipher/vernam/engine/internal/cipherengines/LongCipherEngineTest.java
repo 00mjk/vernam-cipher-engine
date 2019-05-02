@@ -1,6 +1,6 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
-import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
+import org.enjekt.cipher.vernam.engine.api.LongWrapper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,24 +9,23 @@ import java.security.SecureRandom;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class IntegerCipherEngineTest {
+public class LongCipherEngineTest {
 
-    SecureRandom random = new SecureRandom();
-    private IntegerCipherEngine engine;
+    private LongCipherEngine engine;
+    private SecureRandom random = new SecureRandom();
 
     @Before
     public void init() {
-        engine = new IntegerCipherEngine();
+        engine = new LongCipherEngine();
     }
 
     @Test
     public void testValidLength() {
-        Integer zip = 78757;
+        Long zip = 78757L;
 
-        IntegerWrapper wrapper = engine.encrypt(zip);
+        LongWrapper wrapper = engine.encrypt(zip);
 
         assertNotEquals(zip, wrapper.getEncryptedValue());
-        //   System.out.println(wrapper.getEncryptedValue().toString());
 
         assertEquals(zip.toString().length(), wrapper.getEncryptedValue().toString().length());
 
@@ -34,38 +33,42 @@ public class IntegerCipherEngineTest {
 
     @Test
     public void testNegative() {
-        Integer underTest = -190;
+        Long underTest = (long) -190;
 
-        Integer decrypted = doRoundTrip(underTest);
+        Long decrypted = doRoundTrip(underTest);
         assertEquals(underTest, decrypted);
-        System.out.println(decrypted);
+        //System.out.println(decrypted);
     }
 
     @Test
     public void testBoundariesRoundTrip() {
-        Integer underTest = 190;
+        Long underTest = 190L;
 
-        Integer decrypted = doRoundTrip(underTest);
+        Long decrypted = doRoundTrip(underTest);
         assertEquals(underTest, decrypted);
 
         //System.out.println(decrypted);
 
     }
 
+
     @Test
     public void testBulkRandom() {
 
 
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 10000; i++) {
 
-            Integer underTest = random.nextInt();
-            IntegerWrapper wrapper = engine.encrypt(underTest);
-
-            Integer decrypted = engine.decrypt(wrapper);
+            Long underTest = random.nextLong();
+            LongWrapper wrapper = engine.encrypt(underTest);
+            // System.out.println("Encrypted: "+ wrapper.getEncryptedValue());
+            Long decrypted = engine.decrypt(wrapper);
+            // System.out.println("Decrypted: "+ decrypted);
             if (!decrypted.equals(underTest))
                 System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
 
             assertEquals(underTest, decrypted);
+            // System.out.println();
+
         }
 
 
@@ -73,8 +76,8 @@ public class IntegerCipherEngineTest {
 
     @Test
     public void testMinMax() {
-        Integer underTest = Integer.MAX_VALUE;
-        Integer decrypted = doRoundTrip(underTest);
+        Long underTest = Long.MAX_VALUE;
+        Long decrypted = doRoundTrip(underTest);
         if (!decrypted.equals(underTest))
             System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
 
@@ -82,7 +85,7 @@ public class IntegerCipherEngineTest {
 
         //TODO The lower bound is 1 less than upper and the cipher engine should
         //be cahnged to handle it.
-        underTest = Integer.MIN_VALUE - 1;
+        underTest = Long.MIN_VALUE;
         decrypted = doRoundTrip(underTest);
         if (!decrypted.equals(underTest))
             System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
@@ -90,10 +93,10 @@ public class IntegerCipherEngineTest {
         assertEquals(underTest, decrypted);
     }
 
-    public Integer doRoundTrip(Integer value) {
-        IntegerWrapper wrapper = engine.encrypt(value);
+    private Long doRoundTrip(Long value) {
+        LongWrapper wrapper = engine.encrypt(value);
 
-        Integer decrypted = engine.decrypt(wrapper);
+        Long decrypted = engine.decrypt(wrapper);
         return decrypted;
     }
 }

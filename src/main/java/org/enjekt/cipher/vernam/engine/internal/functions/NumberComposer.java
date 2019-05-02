@@ -24,4 +24,8 @@ public class NumberComposer implements IntConsumer {
         return Integer.valueOf(buffer.toString());
     }
 
+    public Long getLong() {
+        return Long.valueOf(buffer.toString());
+    }
+
 }

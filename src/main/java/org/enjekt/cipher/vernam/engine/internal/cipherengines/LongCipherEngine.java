@@ -1,6 +1,6 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
-import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
+import org.enjekt.cipher.vernam.engine.api.LongWrapper;
 import org.enjekt.cipher.vernam.engine.internal.functions.DigitDecryptor;
 import org.enjekt.cipher.vernam.engine.internal.functions.DigitEncyryptor;
 import org.enjekt.cipher.vernam.engine.internal.functions.DigitValidator;
@@ -10,12 +10,12 @@ import java.util.Arrays;
 
 
 /**
- * The type Integer cipher engine. All values during generation and handling are kept
+ * The type Long cipher engine. All values during generation and handling are kept
  * as UTF8 ints and then asesmbled in the composer.
  */
-public class IntegerCipherEngine {
+public class LongCipherEngine {
 
-    private static final int[] MAX = Integer.toString(Integer.MAX_VALUE).chars().toArray();
+    private static final int[] MAX = Long.toString(Long.MAX_VALUE).chars().toArray();
 
 
     /**
@@ -24,7 +24,7 @@ public class IntegerCipherEngine {
      * @param value the value
      * @return the integer wrapper
      */
-    public IntegerWrapper encrypt(Integer value) {
+    public LongWrapper encrypt(Long value) {
 
         boolean negative = value < 0;
         if (negative)
@@ -36,7 +36,7 @@ public class IntegerCipherEngine {
         NumberComposer composer = new NumberComposer(negative);
         Arrays.stream(values).map(new DigitEncyryptor(keys, new DigitValidator(values.length, MAX))).forEach(composer);
 
-        return new IntegerWrapper(composer.getInteger(), keys);
+        return new LongWrapper(composer.getLong(), keys);
 
     }
 
@@ -46,15 +46,15 @@ public class IntegerCipherEngine {
      * @param message the message
      * @return the integer
      */
-    public Integer decrypt(IntegerWrapper message) {
-        Integer value = message.getEncryptedValue();
+    public Long decrypt(LongWrapper message) {
+        Long value = message.getEncryptedValue();
         boolean negative = value < 0;
         if (negative)
             value = -value;
 
         NumberComposer composer = new NumberComposer(negative);
         Arrays.stream(value.toString().chars().toArray()).map(new DigitDecryptor(message.getOneTimePad())).forEach(composer);
-        return composer.getInteger();
+        return composer.getLong();
 
     }
 
