@@ -5,13 +5,14 @@ import java.util.function.IntUnaryOperator;
 
 public class DigitEncyryptor implements IntUnaryOperator {
 
-    private static final int LOWER_UTF8_LIMIT = 48;
+    //private static final int LOWER_UTF8_LIMIT = 48;
     private static final int UPPER_UTF8_LIMIT = 57;
     private static final int UPPER_RANGE = 9;
     private static final int MODULO = 10;
-    private static SecureRandom secureRandom = new SecureRandom();
+    private static final SecureRandom secureRandom = new SecureRandom();
+
     private final int[] keys;
-    int count = 0;
+    private int count = 0;
     private final DigitValidator validator;
 
     public DigitEncyryptor(int[] keys, DigitValidator validator) {
@@ -20,7 +21,6 @@ public class DigitEncyryptor implements IntUnaryOperator {
 
     }
 
-    private static int counter;
     @Override
     public int applyAsInt(int operand) {
         int pad = getPad();

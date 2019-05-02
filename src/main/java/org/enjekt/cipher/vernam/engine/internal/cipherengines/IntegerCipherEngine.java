@@ -16,10 +16,8 @@ import java.util.Arrays;
 public class IntegerCipherEngine {
 
     private static final int[] MAX = new Integer(Integer.MAX_VALUE).toString().chars().toArray();
-    private static final int LOWER_UTF8_LIMIT = 48;
-    private static final int UPPER_UTF8_LIMIT = 57;
 
-    private int counter;
+
     /**
      * Encrypt integer wrapper.
      *

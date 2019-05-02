@@ -19,7 +19,7 @@ public class StringCipherEngine {
     /**
      * The Cipher engine which handles UTF8 and key generation.
      */
-    private UTF8CipherEngine cipherEngine = new UTF8CipherEngine(LOWER_UTF8_LIMIT, UPPER_UTF8_LIMIT);
+    private final UTF8CipherEngine cipherEngine = new UTF8CipherEngine(LOWER_UTF8_LIMIT, UPPER_UTF8_LIMIT);
 
 
     /**

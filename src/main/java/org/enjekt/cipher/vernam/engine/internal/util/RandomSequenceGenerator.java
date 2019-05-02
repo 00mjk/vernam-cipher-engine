@@ -5,6 +5,7 @@ import java.util.Base64;
 
 //TODO Configuration, seeding, reseeding, etc. of the random number generaator belongs here
 //Also if more than one generator is used this is where it goes.
+@Deprecated
 public class RandomSequenceGenerator {
     private static final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
     private static SecureRandom secureRandom = new SecureRandom();
