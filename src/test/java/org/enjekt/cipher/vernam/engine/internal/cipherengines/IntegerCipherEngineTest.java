@@ -56,7 +56,7 @@ public class IntegerCipherEngineTest {
     public void testBulkRandom() {
 
 
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000000; i++) {
 
             Integer underTest = random.nextInt();
             IntegerWrapper wrapper = engine.encrypt(underTest);

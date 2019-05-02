@@ -12,21 +12,23 @@ public class DigitEncyryptor implements IntUnaryOperator {
     private static SecureRandom secureRandom = new SecureRandom();
     private final int[] keys;
     int count = 0;
-    private int[] MAX;
-    private Boolean isValid;
+    private final DigitValidator validator;
 
-    public DigitEncyryptor(int[] keys) {
+    public DigitEncyryptor(int[] keys, DigitValidator validator) {
         this.keys = keys;
+        this.validator = validator;
 
     }
 
+    private static int counter;
     @Override
     public int applyAsInt(int operand) {
-
-
         int pad = getPad();
         int encryptVal = doEncrypt(operand, pad);
-
+        while (!validator.isValid(count, encryptVal)) {
+            pad = getPad();
+            encryptVal = doEncrypt(operand, pad);
+        }
         keys[count++] = pad;
         return encryptVal;
 
