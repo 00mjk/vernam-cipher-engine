@@ -20,9 +20,7 @@ generators perhaps with connections to HotBits or other radioactive sources of r
 of random numbers used will come from multiple PRNGs to ensure no detectable patterns. During the encryption process, some random digits
 are thrown out as a result of processing. Even if a weaker PRNG were used, the store for random one time pads would be informationally 
 incomplete making it impossible to determine the random stream. Finally, it must be noted that the one time pads, after
-generation, will be stored in a database which will result in generation order being lost making it impossible to reconstruct and sense
-of the algorithm or underlying random source doesn't yield much either. Even if they or their enciphered twin were published in clear
-text on the web, no information could be discerned - perfect secrecy.
+generation, will be stored in a database which will result in generation order being lost which makes it impossible to reconstruct the stream. Even if the one time pads or their enciphered twin were published in clear text on the web, no useful data could be extracted - perfect secrecy.
 
 "This is a very strong notion of security first developed during WWII by Claude Shannon and proved, mathematically, to be true for the 
 one-time pad by Shannon about the same time. His result was published in the Bell Labs Technical Journal in 1949.
