@@ -40,11 +40,10 @@ public class DigitEncryptor implements IntUnaryOperator {
      */
     public DigitEncryptor(int[] oneTimePad, int[] MAX) {
         this.oneTimePad = oneTimePad;
-        this.MAX =MAX;
+        this.MAX = MAX;
     }
 
     /**
-     *
      * @param operand
      * @return
      */

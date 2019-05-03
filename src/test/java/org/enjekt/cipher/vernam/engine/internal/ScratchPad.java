@@ -15,7 +15,6 @@ public class ScratchPad {
     String toTest = "I see dead sheep...sometimes...";
 
 
-
     @Test
     @Ignore
     public void testBits() {
