@@ -77,8 +77,8 @@ public class IntegerCipherEngineTest {
         Instant end = clock.instant();
         double seconds = (end.toEpochMilli() - start.toEpochMilli()) / 1000;
         System.out.println(numberOfCycles + " encrypt operations in " + seconds + " seconds.");
-        double calculationsPerSecond = numberOfCycles / (end.toEpochMilli() - start.toEpochMilli());
-        System.out.println("Number of encrypt operations per millisecond: " + calculationsPerSecond);
+        double calculationsPerSecond = numberOfCycles / seconds;
+        System.out.println("Number of encrypt operations per second: " + calculationsPerSecond);
 
         start = clock.instant();
         for (IntegerWrapper wrapper : wrappers) {
@@ -87,8 +87,8 @@ public class IntegerCipherEngineTest {
         end = clock.instant();
         seconds = (end.toEpochMilli() - start.toEpochMilli()) / 1000;
         System.out.println(numberOfCycles + " decrypt operations in " + seconds + " seconds.");
-        calculationsPerSecond = numberOfCycles / (end.toEpochMilli() - start.toEpochMilli());
-        System.out.println("Number of decrypt operations per millisecond: " + calculationsPerSecond);
+        calculationsPerSecond = numberOfCycles / seconds;
+        System.out.println("Number of decrypt operations per second: " + calculationsPerSecond);
 
 
     }
@@ -131,7 +131,7 @@ public class IntegerCipherEngineTest {
         assertEquals(underTest, decrypted);
     }
 
-    public Integer doRoundTrip(Integer value) {
+    private Integer doRoundTrip(Integer value) {
         IntegerWrapper wrapper = engine.encrypt(value);
 
         Integer decrypted = engine.decrypt(wrapper);
