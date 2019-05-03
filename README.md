@@ -1,7 +1,7 @@
 # vernam-cipher-engine
 Vernam Cipher Engine using Java streams to create OTP and encrypted value of same data type, length and sign.
 
-Perfect Secrecy
+# Perfect Secrecy
 Used by the US and USSR in the cold war, the Vernam Cipher was an unbreakable method of enciphering and deciphering messages. Unlike many 
 common encryption methods, it doesn't use an algorithm to obscure the data or make it difficult to figure out. There isn't a common key or 
 password which, once gained, will reveal all the data. It is considered "infomation-theoretically secure" - perfect secrecy.
