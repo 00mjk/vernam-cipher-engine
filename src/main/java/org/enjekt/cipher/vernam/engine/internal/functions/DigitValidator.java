@@ -1,6 +1,6 @@
 package org.enjekt.cipher.vernam.engine.internal.functions;
 
-
+@Deprecated
 public class DigitValidator {
     private static final int LOWER_UTF8_LIMIT = 48;
     private final int[] MAX;

@@ -1,18 +1,13 @@
 package org.enjekt.cipher.vernam.engine.internal;
 
-import org.enjekt.cipher.vernam.engine.internal.functions.IntQueue;
-import org.enjekt.cipher.vernam.engine.internal.functions.RNGRunnable;
 import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.nio.LongBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
-import java.util.List;
-import java.util.concurrent.CyclicBarrier;
 
 public class ScratchPad {
     private static final int LOWER_UTF8_LIMIT = 48;
@@ -20,34 +15,6 @@ public class ScratchPad {
     String toTest = "I see dead sheep...sometimes...";
 
 
-    @Test
-    public void testRNGViaThread() {
-        int[] ndigits = new int[10];
-
-        final CyclicBarrier gate = new CyclicBarrier(11);
-        List<Thread> threads = new ArrayList<Thread>();
-        IntQueue queue = new IntQueue(100);
-        for (int i = 0; i < 10; i++)
-            threads.add(new Thread(new RNGRunnable(i, queue, gate)));
-
-        for (int i = 0; i < 10; i++)
-            threads.get(i).start();
-
-        try {
-            gate.await();
-        } catch (Exception e) {
-
-        }
-        for (int i = 0; i <= 10000; i++) {
-            int r = queue.take();
-            System.out.print(r);
-            ndigits[r]++;
-        }
-        System.out.println();
-        for (int i = 0; i < 10; i++) {
-            System.out.println(i + ": " + ndigits[i]);
-        }
-    }
 
     @Test
     @Ignore

@@ -1,4 +1,4 @@
-package org.enjekt.cipher.vernam.engine.internal.functions;
+package org.enjekt.cipher.vernam.engine.internal.prng;
 
 public class IntQueue {
 
@@ -27,7 +27,7 @@ public class IntQueue {
 
     public int take() {
         synchronized (queue) {
-            while (counter < 0)
+            if (counter < 0)
                 try {
                     queue.wait();
                 } catch (InterruptedException ex) {

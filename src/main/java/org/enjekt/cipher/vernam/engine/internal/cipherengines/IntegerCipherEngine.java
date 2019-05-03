@@ -3,7 +3,6 @@ package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
 import org.enjekt.cipher.vernam.engine.internal.functions.DigitDecryptor;
 import org.enjekt.cipher.vernam.engine.internal.functions.DigitEncryptor;
-import org.enjekt.cipher.vernam.engine.internal.functions.DigitValidator;
 import org.enjekt.cipher.vernam.engine.internal.functions.NumberComposer;
 
 import java.util.Arrays;
@@ -34,8 +33,7 @@ public class IntegerCipherEngine {
         int[] oneTimePad = new int[values.length];
 
         NumberComposer composer = new NumberComposer(negative);
-        Arrays.stream(values).map(new DigitEncryptor(oneTimePad, new DigitValidator(values.length, MAX))).forEach(composer);
-
+        Arrays.stream(values).map(new DigitEncryptor(oneTimePad, MAX)).forEach(composer);
         return new IntegerWrapper(composer.getInteger(), oneTimePad);
 
     }
