@@ -13,9 +13,9 @@ import java.util.Arrays;
  * as UTF8 ints and then asesmbled in the composer.
  */
 public class IntegerCipherEngine {
+    private static final int LOWER_UTF8_LIMIT = 48;
 
-    private static final int[] MAX = Integer.toString(Integer.MAX_VALUE).chars().toArray();
-
+    private static final int[] MAX_UTF8 = Integer.toString(Integer.MAX_VALUE).chars().toArray();
 
     /**
      * Encrypt integer wrapper.
@@ -25,17 +25,25 @@ public class IntegerCipherEngine {
      */
     public IntegerWrapper encrypt(Integer value) {
 
-        boolean negative = value < 0;
-        if (negative)
-            value = -value;
-
-        int[] values = value.toString().chars().toArray();
+        boolean isNegative = value < 0;
+        int[] values = getInts(value, isNegative);
         int[] oneTimePad = new int[values.length];
 
-        NumberComposer composer = new NumberComposer(negative);
-        Arrays.stream(values).map(new DigitEncryptor(oneTimePad, MAX)).forEach(composer);
+        NumberComposer composer = new NumberComposer(isNegative);
+        Arrays.stream(values).map(new DigitEncryptor(oneTimePad, MAX_UTF8)).forEach(composer);
         return new IntegerWrapper(composer.getInteger(), oneTimePad);
 
+    }
+
+    private int[] getInts(Integer value, boolean isNegative) {
+        String valueStr = value.toString();
+
+        int[] values;
+        if (isNegative)
+            values = valueStr.substring(1).chars().toArray();
+        else
+            values = valueStr.chars().toArray();
+        return values;
     }
 
     /**

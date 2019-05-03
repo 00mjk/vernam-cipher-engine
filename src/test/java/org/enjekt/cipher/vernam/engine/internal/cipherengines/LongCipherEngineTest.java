@@ -74,7 +74,7 @@ public class LongCipherEngineTest {
     }
 
     @Test
-    public void testMinMax() {
+    public void testMax() {
         Long underTest = Long.MAX_VALUE;
         Long decrypted = doRoundTrip(underTest);
         if (!decrypted.equals(underTest))
@@ -82,10 +82,13 @@ public class LongCipherEngineTest {
 
         assertEquals(underTest, decrypted);
 
-        //TODO The lower bound is 1 less than upper and the cipher engine should
+    }
+
+    @Test
+    public void testMin() {
         //be cahnged to handle it.
-        underTest = Long.MIN_VALUE + 1;
-        decrypted = doRoundTrip(underTest);
+        Long underTest = Long.MIN_VALUE;
+        Long decrypted = doRoundTrip(underTest);
         if (!decrypted.equals(underTest))
             System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
 

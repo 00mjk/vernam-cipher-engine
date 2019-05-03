@@ -26,21 +26,20 @@ public class DigitEncryptor implements IntUnaryOperator {
     private static final int BASE = 10;
 
     private final int[] oneTimePad;
-    private final int[] MAX;
+    private final int[] MAX_UTF8;
     private Boolean isNormalRange = Boolean.FALSE;
     private int count = 0;
 
 
     /**
-     * Instantiates a new Digit encryptor. The MAX value of the Integer, Long, Short
+     * Instantiates a new Digit encryptor. The MAX_UTF8 value of the Integer, Long, Short
      * and so on is passed in so that maximum values can be maintained.
-     *
-     * @param oneTimePad the one time pad
-     * @param MAX        the max
+     *  @param oneTimePad the one time pad
+     * @param MAX_UTF8        the max
      */
-    public DigitEncryptor(int[] oneTimePad, int[] MAX) {
+    public DigitEncryptor(int[] oneTimePad, int[] MAX_UTF8) {
         this.oneTimePad = oneTimePad;
-        this.MAX = MAX;
+        this.MAX_UTF8 = MAX_UTF8;
     }
 
     /**
@@ -75,7 +74,7 @@ public class DigitEncryptor implements IntUnaryOperator {
      */
 
     private void checkMaxVal(int encryptVal) {
-        if (MAX.length > oneTimePad.length || MAX[count] > encryptVal)
+        if (MAX_UTF8.length > oneTimePad.length || MAX_UTF8[count] > encryptVal)
             isNormalRange = Boolean.TRUE;
     }
 
@@ -87,7 +86,7 @@ public class DigitEncryptor implements IntUnaryOperator {
         int legalValue = calulateNonZeroPad(operand);
         //When we are dealing with value that is near or at the maximum
         //length of the data type we have to do special calculations.
-        if (MAX.length == oneTimePad.length)
+        if (MAX_UTF8.length == oneTimePad.length)
             legalValue = calculatePadForMaxValue(operand);
         //  System.out.print(legalValue+"  ");
         return legalValue;
@@ -102,17 +101,24 @@ public class DigitEncryptor implements IntUnaryOperator {
         return pad;
     }
 
+
     private int calculatePadForMaxValue(int operand) {
-        int offset = MAX[count] - operand;
-        int digitRange = MAX[count] - LOWER_UTF8_LIMIT;
+        int offset = MAX_UTF8[count] - operand;
+        int digit = operand - LOWER_UTF8_LIMIT;
+
+        int digitRange = MAX_UTF8[count] - LOWER_UTF8_LIMIT;
         int rnd = 0;
         if (digitRange > 0)
             rnd = RandomNumberGenerator.nextInt(digitRange);
 
-
         // System.out.print(range +",");
-        int legalValue = (BASE - rnd + offset) % BASE;
-        return legalValue;
+        int pad = (BASE - rnd + offset) % BASE;
+        if (count == 0 && (digit + pad) % BASE == 0) {
+            pad = calculatePadForMaxValue(operand);
+        }
+        // System.out.println(offset+","+digit+","+digitRange+","+pad+","+operand);
+
+        return pad;
     }
 
 

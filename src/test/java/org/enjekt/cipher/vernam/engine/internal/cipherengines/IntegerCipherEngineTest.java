@@ -24,6 +24,7 @@ public class IntegerCipherEngineTest {
     }
 
     @Test
+    // @Ignore
     public void testValidLength() {
         Integer zip = 78757;
 
@@ -37,6 +38,7 @@ public class IntegerCipherEngineTest {
     }
 
     @Test
+    //  @Ignore
     public void testNegative() {
         Integer underTest = -190;
 
@@ -46,6 +48,7 @@ public class IntegerCipherEngineTest {
     }
 
     @Test
+    //@Ignore
     public void testBoundariesRoundTrip() {
         Integer underTest = 190;
 
@@ -57,8 +60,27 @@ public class IntegerCipherEngineTest {
     }
 
     @Test
+    // @Ignore
+    public void testBulkRandom() {
+        int numberOfCycles = 100000;
+        System.out.println("Running bulk encyrpt/decrypt of " + numberOfCycles + " cylces.");
+        for (int i = 0; i < numberOfCycles; i++) {
+            Integer underTest = RandomNumberGenerator.nextInt();
+            IntegerWrapper wrapper = engine.encrypt(underTest);
+            assertNotEquals(wrapper.getEncryptedValue(), underTest);
+            //  System.out.println(underTest+","+wrapper.getEncryptedValue());
+            Integer decrypted = engine.decrypt(wrapper);
+            if (!decrypted.equals(underTest))
+                System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
+
+            assertEquals(underTest, decrypted);
+        }
+
+    }
+    @Test
+    //  @Ignore
     public void timeTestCycles() {
-        int numberOfCycles = 10000000;
+        int numberOfCycles = 1000000;
         System.out.println("Running bulk timed test of encyrpt/decrypt of " + numberOfCycles + " cylces.");
 
         List<Integer> testNumbers = new ArrayList<>(numberOfCycles);
@@ -75,7 +97,7 @@ public class IntegerCipherEngineTest {
             wrappers.add(engine.encrypt(underTest));
         }
         Instant end = clock.instant();
-        double seconds = (end.toEpochMilli() - start.toEpochMilli()) / 1000;
+        double seconds = (end.toEpochMilli() - start.toEpochMilli());
         System.out.println(numberOfCycles + " encrypt operations in " + seconds + " seconds.");
         double calculationsPerSecond = numberOfCycles / seconds;
         System.out.println("Number of encrypt operations per second: " + calculationsPerSecond);
@@ -85,7 +107,7 @@ public class IntegerCipherEngineTest {
             Integer decrypted = engine.decrypt(wrapper);
         }
         end = clock.instant();
-        seconds = (end.toEpochMilli() - start.toEpochMilli()) / 1000;
+        seconds = (end.toEpochMilli() - start.toEpochMilli());
         System.out.println(numberOfCycles + " decrypt operations in " + seconds + " seconds.");
         calculationsPerSecond = numberOfCycles / seconds;
         System.out.println("Number of decrypt operations per second: " + calculationsPerSecond);
@@ -94,26 +116,7 @@ public class IntegerCipherEngineTest {
     }
 
     @Test
-    public void testBulkRandom() {
-        int numberOfCycles = 100000;
-        System.out.println("Running bulk encyrpt/decrypt of " + numberOfCycles + " cylces.");
-        for (int i = 0; i < numberOfCycles; i++) {
-
-            Integer underTest = RandomNumberGenerator.nextInt();
-            IntegerWrapper wrapper = engine.encrypt(underTest);
-            assertNotEquals(wrapper.getEncryptedValue(), underTest);
-            //  System.out.println(underTest+","+wrapper.getEncryptedValue());
-            Integer decrypted = engine.decrypt(wrapper);
-            if (!decrypted.equals(underTest))
-                System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
-
-            assertEquals(underTest, decrypted);
-        }
-
-    }
-
-    @Test
-    public void testMinMax() {
+    public void testMAXValue() {
         Integer underTest = Integer.MAX_VALUE;
         Integer decrypted = doRoundTrip(underTest);
         if (!decrypted.equals(underTest))
@@ -121,10 +124,15 @@ public class IntegerCipherEngineTest {
 
         assertEquals(underTest, decrypted);
 
+    }
+    @Test
+    // @Ignore
+    public void testMINValue() {
         //TODO The lower bound is 1 less than upper and the cipher engine should
         //be cahnged to handle it.
-        underTest = Integer.MIN_VALUE + 1;
-        decrypted = doRoundTrip(underTest);
+        Integer underTest = Integer.MIN_VALUE;
+        System.out.println(underTest);
+        Integer decrypted = doRoundTrip(underTest);
         if (!decrypted.equals(underTest))
             System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
 
