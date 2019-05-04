@@ -28,7 +28,7 @@ public class IntegerCipherEngineTest {
     public void testValidLength() {
         Integer zip = 78757;
 
-        IntegerWrapper wrapper = engine.encrypt(zip);
+        IntegerWrapper wrapper = engine.encipher(zip);
 
         assertNotEquals(zip, wrapper.getEncryptedValue());
         //   System.out.println(wrapper.getEncryptedValue().toString());
@@ -68,13 +68,13 @@ public class IntegerCipherEngineTest {
         System.out.println(Integer.valueOf(Integer.MAX_VALUE).toString().chars().toArray().length);
         for (int i = 0; i < numberOfCycles; i++) {
             Integer underTest = RandomNumberGenerator.nextInt();
-            IntegerWrapper wrapper = engine.encrypt(underTest);
+            IntegerWrapper wrapper = engine.encipher(underTest);
             //TODO It is possible that the pad will result in the same number.
             //  assertNotEquals(wrapper.getEncryptedValue(), underTest);
             // System.out.printf("Encrypted value: %d\n",wrapper.getEncryptedValue());
             if (wrapper.getEncryptedValue().equals(underTest))
                 System.out.println(underTest + "," + wrapper.getEncryptedValue());
-            Integer decrypted = engine.decrypt(wrapper);
+            Integer decrypted = engine.decipher(wrapper);
             if (!decrypted.equals(underTest))
                 System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
             assertEquals(underTest, decrypted);
@@ -99,7 +99,7 @@ public class IntegerCipherEngineTest {
         for (int i = 0; i < numberOfCycles; i++) {
 
             Integer underTest = testNumbers.get(i);
-            wrappers.add(engine.encrypt(underTest));
+            wrappers.add(engine.encipher(underTest));
         }
         Instant end = clock.instant();
         double seconds = (end.toEpochMilli() - start.toEpochMilli());
@@ -109,7 +109,7 @@ public class IntegerCipherEngineTest {
 
         start = clock.instant();
         for (IntegerWrapper wrapper : wrappers) {
-            Integer decrypted = engine.decrypt(wrapper);
+            Integer decrypted = engine.decipher(wrapper);
         }
         end = clock.instant();
         seconds = (end.toEpochMilli() - start.toEpochMilli());
@@ -146,9 +146,9 @@ public class IntegerCipherEngineTest {
     }
 
     private Integer doRoundTrip(Integer value) {
-        IntegerWrapper wrapper = engine.encrypt(value);
+        IntegerWrapper wrapper = engine.encipher(value);
 
-        Integer decrypted = engine.decrypt(wrapper);
+        Integer decrypted = engine.decipher(wrapper);
         return decrypted;
     }
 }

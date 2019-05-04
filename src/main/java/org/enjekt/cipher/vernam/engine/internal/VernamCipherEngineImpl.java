@@ -17,33 +17,33 @@ public class VernamCipherEngineImpl implements VernamCipherEngine {
     private final LongCipherEngine longCipherEngine = new LongCipherEngine();
 
     @Override
-    public StringWrapper encrypt(String messageToEncrypt) {
-        return stringCipherEngine.encrypt(messageToEncrypt);
+    public StringWrapper encipher(String messageToEncrypt) {
+        return stringCipherEngine.encipher(messageToEncrypt);
     }
 
     @Override
-    public String decrypt(StringWrapper wrapper) {
-        return stringCipherEngine.decrypt(wrapper);
+    public String decipher(StringWrapper wrapper) {
+        return stringCipherEngine.decipher(wrapper);
     }
 
     @Override
-    public IntegerWrapper encrypt(Integer value) {
-        return integerCipherEngine.encrypt(value);
+    public IntegerWrapper encipher(Integer value) {
+        return integerCipherEngine.encipher(value);
     }
 
     @Override
-    public Integer decrypt(IntegerWrapper message) {
-        return integerCipherEngine.decrypt(message);
+    public Integer decipher(IntegerWrapper message) {
+        return integerCipherEngine.decipher(message);
     }
 
     @Override
-    public LongWrapper encrypt(Long value) {
-        return longCipherEngine.encrypt(value);
+    public LongWrapper encipher(Long value) {
+        return longCipherEngine.encipher(value);
     }
 
     @Override
-    public Long decrypt(LongWrapper wrapper) {
-        return longCipherEngine.decrypt(wrapper);
+    public Long decipher(LongWrapper wrapper) {
+        return longCipherEngine.decipher(wrapper);
     }
 
 

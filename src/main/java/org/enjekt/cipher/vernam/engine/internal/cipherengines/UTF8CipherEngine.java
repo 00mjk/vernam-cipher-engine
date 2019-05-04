@@ -37,13 +37,13 @@ public class UTF8CipherEngine {
      * Decrypt value composer.
      *
      * @param values         the toDecrypt
-     * @param encryptionKeys the encryption keys
+     * @param oneTimePad the encryption keys
      * @return the value composer
      */
-    public int[] decrypt(int[] values, int[] encryptionKeys) {
+    public int[] decipher(int[] values, int[] oneTimePad) {
 
         IntCollector collector = new IntCollector(values.length);
-        Arrays.stream(values).map(new SubtractWrapLimit(encryptionKeys, lowerUTF8Limit, upperKeyRange + 1)).forEach(collector);
+        Arrays.stream(values).map(new SubtractWrapLimit(oneTimePad, lowerUTF8Limit, upperKeyRange + 1)).forEach(collector);
 
         return collector.getValues();
 
@@ -56,10 +56,10 @@ public class UTF8CipherEngine {
      * @param values the value
      * @return the encrypted results holder
      */
-    public EncryptedResultsHolder encrypt(int[] values) {
-        int[] keys = RandomNumberGenerator.ints(values.length, lowerKeyRange, upperKeyRange).toArray();
-        EncryptedResultsHolder holder = new EncryptedResultsHolder(keys);
-        Arrays.stream(values).map(new AddWrapLimit(keys, upperUTF8Limit, upperKeyRange + 1)).forEach(holder);
+    public EncryptedResultsHolder encipher(int[] values) {
+        int[] oneTimePad = RandomNumberGenerator.ints(values.length, lowerKeyRange, upperKeyRange).toArray();
+        EncryptedResultsHolder holder = new EncryptedResultsHolder(oneTimePad);
+        Arrays.stream(values).map(new AddWrapLimit(oneTimePad, upperUTF8Limit, upperKeyRange + 1)).forEach(holder);
 
         return holder;
 

@@ -53,7 +53,7 @@ public class UTF8DigitEncryptor implements IntUnaryOperator {
         int pad = RandomNumberGenerator.nextInt(UPPER_RANGE);
         if (!isNormalRange)
             pad = calculatePad(operand);
-        int encryptVal = doEncrypt(operand, pad);
+        int encryptVal = doencipher(operand, pad);
 //        System.out.println(encryptVal);
         if (!isNormalRange) checkMaxVal(encryptVal);
         oneTimePad[count++] = pad;
@@ -61,7 +61,7 @@ public class UTF8DigitEncryptor implements IntUnaryOperator {
 
     }
 
-    private int doEncrypt(int operand, int encryptionKey) {
+    private int doencipher(int operand, int encryptionKey) {
         // System.out.println( operand + ","+ encryptionKey);
         int result = operand + encryptionKey;
         if (result > UPPER_UTF8_LIMIT) {

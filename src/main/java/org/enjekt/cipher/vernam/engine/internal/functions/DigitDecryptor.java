@@ -17,12 +17,12 @@ public class DigitDecryptor implements IntUnaryOperator {
 
     @Override
     public int applyAsInt(int operand) {
-        return doDecrypt(operand, keys[count++]);
+        return dodecipher(operand, keys[count++]);
 
     }
 
 
-    private int doDecrypt(int operand, int encryptionKey) {
+    private int dodecipher(int operand, int encryptionKey) {
         int result = operand - encryptionKey;
         //System.out.println(result +" = " + operand + " - " + encryptionKey);
         if (result < LOWER_UTF8_LIMIT) {

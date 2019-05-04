@@ -61,7 +61,7 @@ public class ScratchPad {
 
     }
 
-    private void encrypt(String msg) {
+    private void encipher(String msg) {
         byte[] plainBytes = msg.getBytes(StandardCharsets.UTF_8);
 
         byte[] keyBytes = new byte[plainBytes.length];

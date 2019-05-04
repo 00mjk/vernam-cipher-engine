@@ -34,7 +34,7 @@ public class UTF8IntegerCipherEngine {
      * @param value the value
      * @return the integer wrapper
      */
-    public IntegerWrapper encrypt(Integer value) {
+    public IntegerWrapper encipher(Integer value) {
         boolean isNegative = value < 0;
         int[] values = getInts(value, isNegative);
         int[] oneTimePad = new int[values.length];
@@ -57,7 +57,7 @@ public class UTF8IntegerCipherEngine {
      * @param message the message
      * @return the integer
      */
-    public Integer decrypt(IntegerWrapper message) {
+    public Integer decipher(IntegerWrapper message) {
         Integer value = message.getEncryptedValue();
         boolean isNegative = value < 0;
         int[] values = getInts(value, isNegative);

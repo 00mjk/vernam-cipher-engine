@@ -29,9 +29,9 @@ public class StringCipherEngine {
      * @param value the value
      * @return the string wrapper
      */
-    public StringWrapper encrypt(String value) {
+    public StringWrapper encipher(String value) {
 
-        EncryptedResultsHolder holder = cipherEngine.encrypt(value.chars().toArray());
+        EncryptedResultsHolder holder = cipherEngine.encipher(value.chars().toArray());
 
         StringComposer composer = new StringComposer();
         Arrays.stream(holder.getValues()).forEach(composer);
@@ -46,9 +46,9 @@ public class StringCipherEngine {
      * @param wrapper the wrapper
      * @return the string
      */
-    public String decrypt(StringWrapper wrapper) {
+    public String decipher(StringWrapper wrapper) {
 
-        int[] utf8Values = cipherEngine.decrypt(wrapper.getEncryptedText().chars().toArray(), wrapper.getEncryptionKeys());
+        int[] utf8Values = cipherEngine.decipher(wrapper.getEncryptedText().chars().toArray(), wrapper.getEncryptionKeys());
         StringComposer composer = new StringComposer();
         Arrays.stream(utf8Values).forEach(composer);
         return composer.getString();

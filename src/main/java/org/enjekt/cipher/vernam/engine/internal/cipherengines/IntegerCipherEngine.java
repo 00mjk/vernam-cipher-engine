@@ -28,9 +28,9 @@ public class IntegerCipherEngine {
      * @param value the value
      * @return the integer wrapper
      */
-    public IntegerWrapper encrypt(Integer value) {
+    public IntegerWrapper encipher(Integer value) {
         NumberComposer numberComposer = new NumberComposer();
-        int[] oneTimePad = digitStreamCipher.encrypt(value.toString(), numberComposer);
+        int[] oneTimePad = digitStreamCipher.encipher(value.toString(), numberComposer);
         return new IntegerWrapper(numberComposer.getInteger(), oneTimePad);
 
     }
@@ -40,9 +40,9 @@ public class IntegerCipherEngine {
      * @param message the message
      * @return the integer
      */
-    public Integer decrypt(IntegerWrapper message) {
+    public Integer decipher(IntegerWrapper message) {
         Integer value = message.getEncryptedValue();
-        NumberComposer composer = digitStreamCipher.decrypt(value.toString(), message.getOneTimePad());
+        NumberComposer composer = digitStreamCipher.decipher(value.toString(), message.getOneTimePad());
         return composer.getInteger();
 
     }

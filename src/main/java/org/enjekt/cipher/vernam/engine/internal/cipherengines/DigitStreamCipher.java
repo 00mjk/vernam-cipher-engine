@@ -15,7 +15,7 @@ public class DigitStreamCipher {
     }
 
 
-    public int[] encrypt(String value, NumberComposer composer) {
+    public int[] encipher(String value, NumberComposer composer) {
         boolean isNegative = value.contains("-");
         int[] values = getInts(value, isNegative);
         int[] oneTimePad = new int[values.length];
@@ -25,7 +25,7 @@ public class DigitStreamCipher {
         return oneTimePad;
     }
 
-    public NumberComposer decrypt(String value, int[] oneTimePad) {
+    public NumberComposer decipher(String value, int[] oneTimePad) {
         boolean isNegative = value.contains("-");
         int[] values = getInts(value, isNegative);
         NumberComposer composer = new NumberComposer().setNegative(isNegative);

@@ -2,15 +2,15 @@ package org.enjekt.cipher.vernam.engine.api;
 
 public interface VernamCipherEngine {
 
-    StringWrapper encrypt(String messageToEncryt);
+    StringWrapper encipher(String messageToEncryt);
 
-    String decrypt(StringWrapper wrapper);
+    String decipher(StringWrapper wrapper);
 
-    IntegerWrapper encrypt(Integer value);
+    IntegerWrapper encipher(Integer value);
 
-    Integer decrypt(IntegerWrapper wrapper);
+    Integer decipher(IntegerWrapper wrapper);
 
-    LongWrapper encrypt(Long value);
+    LongWrapper encipher(Long value);
 
-    Long decrypt(LongWrapper wrapper);
+    Long decipher(LongWrapper wrapper);
 }

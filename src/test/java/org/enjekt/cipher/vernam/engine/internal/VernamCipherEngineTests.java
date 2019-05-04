@@ -22,7 +22,7 @@ public class VernamCipherEngineTests {
     @Test
     public void testStringEncryption() {
 
-        StringWrapper msg = engine.encrypt(FOX);
+        StringWrapper msg = engine.encipher(FOX);
         assertNotNull(msg);
         assertNotNull(msg.getEncryptedText());
         assertNotNull(msg.getEncryptionKeys());
@@ -33,12 +33,12 @@ public class VernamCipherEngineTests {
     @Test
     public void thereAndBackAgain() {
 
-        StringWrapper msg = engine.encrypt(FOX);
+        StringWrapper msg = engine.encipher(FOX);
         assertNotNull(msg);
         System.out.println("Encrypted: " + msg.getEncryptedText());
         System.out.println(msg.getEncryptedText().length());
 
-        String decrypted = engine.decrypt(msg);
+        String decrypted = engine.decipher(msg);
         System.out.println("Decrypted: " + decrypted);
         System.out.println(decrypted.length());
         assertFalse(FOX == decrypted);
@@ -48,15 +48,15 @@ public class VernamCipherEngineTests {
 
 
     @Test
-    public void testRoundTripIntegerEncryptDecrypt() {
+    public void testRoundTripIntegerEncryptdecipher() {
         Integer zip = 78757;
 
 
         //for(int i=0;i<100;i++) {
-        IntegerWrapper wrapper = engine.encrypt(zip);
+        IntegerWrapper wrapper = engine.encipher(zip);
 
 
-        Integer decryptzip = engine.decrypt(wrapper);
+        Integer decryptzip = engine.decipher(wrapper);
         assertEquals(zip, decryptzip);
 
         System.out.println(decryptzip);

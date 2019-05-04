@@ -22,7 +22,7 @@ public class LongCipherEngineTest {
     public void testValidLength() {
         Long zip = 78757L;
 
-        LongWrapper wrapper = engine.encrypt(zip);
+        LongWrapper wrapper = engine.encipher(zip);
 
         assertNotEquals(zip, wrapper.getEncryptedValue());
 
@@ -58,9 +58,9 @@ public class LongCipherEngineTest {
         for (int i = 0; i < 10000; i++) {
 
             Long underTest = RandomNumberGenerator.nextLong();
-            LongWrapper wrapper = engine.encrypt(underTest);
+            LongWrapper wrapper = engine.encipher(underTest);
             //   System.out.println("Encrypted: " + wrapper.getEncryptedValue());
-            Long decrypted = engine.decrypt(wrapper);
+            Long decrypted = engine.decipher(wrapper);
             //    System.out.println("Decrypted: " + decrypted);
             if (!decrypted.equals(underTest))
                 System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
@@ -96,9 +96,9 @@ public class LongCipherEngineTest {
     }
 
     private Long doRoundTrip(Long value) {
-        LongWrapper wrapper = engine.encrypt(value);
+        LongWrapper wrapper = engine.encipher(value);
 
-        Long decrypted = engine.decrypt(wrapper);
+        Long decrypted = engine.decipher(wrapper);
         return decrypted;
     }
 }

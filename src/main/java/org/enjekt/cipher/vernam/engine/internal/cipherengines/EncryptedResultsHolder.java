@@ -7,9 +7,9 @@ public class EncryptedResultsHolder implements IntConsumer {
     private final int[] oneTimePad;
     private int i = 0;
 
-    public EncryptedResultsHolder(int[] keys) {
-        this.values = new int[keys.length];
-        this.oneTimePad = keys;
+    public EncryptedResultsHolder(int[] oneTimePad) {
+        this.values = new int[oneTimePad.length];
+        this.oneTimePad = oneTimePad;
     }
 
     public int[] getValues() {

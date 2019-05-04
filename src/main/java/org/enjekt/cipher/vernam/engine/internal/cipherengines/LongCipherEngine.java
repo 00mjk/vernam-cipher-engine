@@ -24,16 +24,16 @@ public class LongCipherEngine {
     private static final DigitStreamCipher digitStreamCipher = new DigitStreamCipher(MAX_DIGITS);
 
 
-    public LongWrapper encrypt(Long value) {
+    public LongWrapper encipher(Long value) {
         NumberComposer numberComposer = new NumberComposer();
-        int[] oneTimePad = digitStreamCipher.encrypt(value.toString(), numberComposer);
+        int[] oneTimePad = digitStreamCipher.encipher(value.toString(), numberComposer);
         return new LongWrapper(numberComposer.getLong(), oneTimePad);
 
     }
 
-    public Long decrypt(LongWrapper message) {
+    public Long decipher(LongWrapper message) {
         Long value = message.getEncryptedValue();
-        NumberComposer composer = digitStreamCipher.decrypt(value.toString(), message.getOneTimePad());
+        NumberComposer composer = digitStreamCipher.decipher(value.toString(), message.getOneTimePad());
         return composer.getLong();
 
     }
