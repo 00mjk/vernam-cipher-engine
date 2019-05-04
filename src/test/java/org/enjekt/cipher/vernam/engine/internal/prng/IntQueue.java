@@ -27,7 +27,7 @@ public class IntQueue {
 
     public int take() {
         synchronized (queue) {
-            if (counter < 0)
+            while (counter < 0)
                 try {
                     queue.wait();
                 } catch (InterruptedException ex) {

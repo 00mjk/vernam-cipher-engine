@@ -70,6 +70,12 @@
                 <version>2.23.2</version>
                 <type>pom</type>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-math3</artifactId>
+                <version>3.6.1</version>
+            </dependency>
 
 
         </dependencies>
@@ -104,8 +110,14 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
     <build>

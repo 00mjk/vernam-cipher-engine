@@ -13,9 +13,16 @@ import java.util.Arrays;
  * as UTF8 ints and then asesmbled in the composer.
  */
 public class IntegerCipherEngine {
+
     private static final int LOWER_UTF8_LIMIT = 48;
 
-    private static final int[] MAX_UTF8 = Integer.toString(Integer.MAX_VALUE).chars().toArray();
+    private static final int[] MAX_UTF8;
+    private static final int[] MAX_DIGITS;
+
+    static {
+        MAX_UTF8 = Integer.toString(Integer.MAX_VALUE).chars().toArray();
+        MAX_DIGITS = Integer.toString(Integer.MAX_VALUE).chars().map(i -> i - LOWER_UTF8_LIMIT).toArray();
+    }
 
     /**
      * Encrypt integer wrapper.
@@ -24,26 +31,21 @@ public class IntegerCipherEngine {
      * @return the integer wrapper
      */
     public IntegerWrapper encrypt(Integer value) {
-
         boolean isNegative = value < 0;
         int[] values = getInts(value, isNegative);
         int[] oneTimePad = new int[values.length];
 
         NumberComposer composer = new NumberComposer(isNegative);
-        Arrays.stream(values).map(new DigitEncryptor(oneTimePad, MAX_UTF8)).forEach(composer);
+        Arrays.stream(values).map(i -> i - LOWER_UTF8_LIMIT).map(new DigitEncryptor(MAX_DIGITS, oneTimePad)).map(i -> i + LOWER_UTF8_LIMIT).forEach(composer);
         return new IntegerWrapper(composer.getInteger(), oneTimePad);
 
     }
 
     private int[] getInts(Integer value, boolean isNegative) {
-        String valueStr = value.toString();
-
-        int[] values;
         if (isNegative)
-            values = valueStr.substring(1).chars().toArray();
+            return value.toString().substring(1).chars().toArray();
         else
-            values = valueStr.chars().toArray();
-        return values;
+            return value.toString().chars().toArray();
     }
 
     /**
@@ -54,12 +56,10 @@ public class IntegerCipherEngine {
      */
     public Integer decrypt(IntegerWrapper message) {
         Integer value = message.getEncryptedValue();
-        boolean negative = value < 0;
-        if (negative)
-            value = -value;
-
-        NumberComposer composer = new NumberComposer(negative);
-        Arrays.stream(value.toString().chars().toArray()).map(new DigitDecryptor(message.getOneTimePad())).forEach(composer);
+        boolean isNegative = value < 0;
+        int[] values = getInts(value, isNegative);
+        NumberComposer composer = new NumberComposer(isNegative);
+        Arrays.stream(values).map(new DigitDecryptor(message.getOneTimePad())).forEach(composer);
         return composer.getInteger();
 
     }

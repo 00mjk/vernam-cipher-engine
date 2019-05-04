@@ -59,9 +59,9 @@ public class LongCipherEngineTest {
 
             Long underTest = RandomNumberGenerator.nextLong();
             LongWrapper wrapper = engine.encrypt(underTest);
-            // System.out.println("Encrypted: "+ wrapper.getEncryptedValue());
+            System.out.println("Encrypted: " + wrapper.getEncryptedValue());
             Long decrypted = engine.decrypt(wrapper);
-            // System.out.println("Decrypted: "+ decrypted);
+            System.out.println("Decrypted: " + decrypted);
             if (!decrypted.equals(underTest))
                 System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
 

@@ -10,15 +10,15 @@ public class PRNG {
 
     public PRNG() {
         final CyclicBarrier gate = new CyclicBarrier(11);
-
-        for (int i = 0; i < 10; i++) {
-            Thread t = new Thread(new RNGRunnable(i, queue, gate));
-            t.start();
-            threads.add(t);
-        }
+//Get them all constructed and ready to go...
+        for (int i = 0; i < 10; i++)
+            threads.add(new Thread(new RNGRunnable(i, queue, gate)));
+        //Then start them.
+        for (int i = 0; i < 10; i++)
+            threads.get(i).start();
 
         try {
-            //Start all threads...
+            //Unblock all threads...
             gate.await();
         } catch (Exception e) {
         }

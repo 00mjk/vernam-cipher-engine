@@ -62,23 +62,28 @@ public class IntegerCipherEngineTest {
     @Test
     // @Ignore
     public void testBulkRandom() {
-        int numberOfCycles = 100000;
+        int numberOfCycles = 1000000;
+        //2,147,483,647
         System.out.println("Running bulk encyrpt/decrypt of " + numberOfCycles + " cylces.");
+        System.out.println(Integer.valueOf(Integer.MAX_VALUE).toString().chars().toArray().length);
         for (int i = 0; i < numberOfCycles; i++) {
             Integer underTest = RandomNumberGenerator.nextInt();
             IntegerWrapper wrapper = engine.encrypt(underTest);
-            assertNotEquals(wrapper.getEncryptedValue(), underTest);
-            //  System.out.println(underTest+","+wrapper.getEncryptedValue());
+            //TODO It is possible that the pad will result in the same number.
+            //  assertNotEquals(wrapper.getEncryptedValue(), underTest);
+            // System.out.printf("Encrypted value: %d\n",wrapper.getEncryptedValue());
+            if (wrapper.getEncryptedValue().equals(underTest))
+                System.out.println(underTest + "," + wrapper.getEncryptedValue());
             Integer decrypted = engine.decrypt(wrapper);
             if (!decrypted.equals(underTest))
                 System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
-
             assertEquals(underTest, decrypted);
         }
 
     }
+
     @Test
-    //  @Ignore
+    // @Ignore
     public void timeTestCycles() {
         int numberOfCycles = 1000000;
         System.out.println("Running bulk timed test of encyrpt/decrypt of " + numberOfCycles + " cylces.");
@@ -98,9 +103,9 @@ public class IntegerCipherEngineTest {
         }
         Instant end = clock.instant();
         double seconds = (end.toEpochMilli() - start.toEpochMilli());
-        System.out.println(numberOfCycles + " encrypt operations in " + seconds + " seconds.");
+        System.out.println(numberOfCycles + " encrypt operations in " + seconds + " milliseconds.");
         double calculationsPerSecond = numberOfCycles / seconds;
-        System.out.println("Number of encrypt operations per second: " + calculationsPerSecond);
+        System.out.println("Number of encrypt operations per millisecond: " + calculationsPerSecond);
 
         start = clock.instant();
         for (IntegerWrapper wrapper : wrappers) {
@@ -108,10 +113,9 @@ public class IntegerCipherEngineTest {
         }
         end = clock.instant();
         seconds = (end.toEpochMilli() - start.toEpochMilli());
-        System.out.println(numberOfCycles + " decrypt operations in " + seconds + " seconds.");
+        System.out.println(numberOfCycles + " decrypt operations in " + seconds + " milliseconds.");
         calculationsPerSecond = numberOfCycles / seconds;
-        System.out.println("Number of decrypt operations per second: " + calculationsPerSecond);
-
+        System.out.println("Number of decrypt operations per milliseconds: " + calculationsPerSecond);
 
     }
 
@@ -125,18 +129,20 @@ public class IntegerCipherEngineTest {
         assertEquals(underTest, decrypted);
 
     }
+
     @Test
     // @Ignore
     public void testMINValue() {
-        //TODO The lower bound is 1 less than upper and the cipher engine should
-        //be cahnged to handle it.
+
         Integer underTest = Integer.MIN_VALUE;
         System.out.println(underTest);
-        Integer decrypted = doRoundTrip(underTest);
-        if (!decrypted.equals(underTest))
-            System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
+        for (int i = 0; i < 10000; i++) {
+            Integer decrypted = doRoundTrip(underTest);
+            if (!decrypted.equals(underTest))
+                System.out.println("Exepected: " + underTest + ", Got: " + decrypted);
 
-        assertEquals(underTest, decrypted);
+            assertEquals(underTest, decrypted);
+        }
     }
 
     private Integer doRoundTrip(Integer value) {

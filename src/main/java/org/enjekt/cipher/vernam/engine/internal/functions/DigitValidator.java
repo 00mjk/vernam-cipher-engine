@@ -1,23 +1,22 @@
 package org.enjekt.cipher.vernam.engine.internal.functions;
 
-@Deprecated
+
 public class DigitValidator {
-    private static final int LOWER_UTF8_LIMIT = 48;
-    private final int[] MAX;
+    private final int[] MAX_DIGIT;
     private Boolean allValid;
 
-    public DigitValidator(int length, int[] MAX) {
-        this.allValid = length < MAX.length;
-        this.MAX = MAX;
+    public DigitValidator(int length, int[] MAX_DIGIT) {
+        this.allValid = length < MAX_DIGIT.length;
+        this.MAX_DIGIT = MAX_DIGIT;
     }
 
     public Boolean isValid(int position, int value) {
 
-        if (position == 0 && value == LOWER_UTF8_LIMIT) return Boolean.FALSE;
+        if (position == 0 && value == 0) return Boolean.FALSE;
         if (allValid) return Boolean.TRUE;
-        if (MAX[position] < value) return Boolean.FALSE;
+        if (MAX_DIGIT[position] < value) return Boolean.FALSE;
 
-        if (MAX[position] > value) allValid = Boolean.TRUE;
+        if (MAX_DIGIT[position] > value) allValid = Boolean.TRUE;
 
         //if we are here then the value was either less than or equal to the maximum for the position.
         return Boolean.TRUE;

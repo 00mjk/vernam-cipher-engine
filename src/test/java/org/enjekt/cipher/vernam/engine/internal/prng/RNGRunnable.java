@@ -24,6 +24,7 @@ public class RNGRunnable implements Runnable {
         while (true) {
             rngQueue.put(number);
 
+
         }
     }
 }
