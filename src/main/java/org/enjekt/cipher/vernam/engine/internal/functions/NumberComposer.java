@@ -6,9 +6,10 @@ public class NumberComposer implements IntConsumer {
     public static final int NEGATIVE = 45;
     private final StringBuffer buffer = new StringBuffer();
 
-    public NumberComposer(Boolean isNegative) {
+    public NumberComposer setNegative(Boolean isNegative) {
         if (isNegative)
             buffer.append((char) NEGATIVE);
+        return this;
     }
 
     @Override

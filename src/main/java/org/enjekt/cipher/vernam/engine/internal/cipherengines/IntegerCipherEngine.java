@@ -1,11 +1,7 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
-import org.enjekt.cipher.vernam.engine.internal.functions.DigitDecryptor;
-import org.enjekt.cipher.vernam.engine.internal.functions.DigitEncryptor;
 import org.enjekt.cipher.vernam.engine.internal.functions.NumberComposer;
-
-import java.util.Arrays;
 
 
 /**
@@ -24,6 +20,8 @@ public class IntegerCipherEngine {
         MAX_DIGITS = Integer.toString(Integer.MAX_VALUE).chars().map(i -> i - LOWER_UTF8_LIMIT).toArray();
     }
 
+    private static final DigitStreamCipher digitStreamCipher = new DigitStreamCipher(MAX_DIGITS);
+
     /**
      * Encrypt integer wrapper.
      *
@@ -31,23 +29,11 @@ public class IntegerCipherEngine {
      * @return the integer wrapper
      */
     public IntegerWrapper encrypt(Integer value) {
-        boolean isNegative = value < 0;
-        int[] values = getInts(value, isNegative);
-        int[] oneTimePad = new int[values.length];
-
-        NumberComposer composer = new NumberComposer(isNegative);
-        Arrays.stream(values).map(i -> i - LOWER_UTF8_LIMIT).map(new DigitEncryptor(MAX_DIGITS, oneTimePad)).map(i -> i + LOWER_UTF8_LIMIT).forEach(composer);
-        return new IntegerWrapper(composer.getInteger(), oneTimePad);
+        NumberComposer numberComposer = new NumberComposer();
+        int[] oneTimePad = digitStreamCipher.encrypt(value.toString(), numberComposer);
+        return new IntegerWrapper(numberComposer.getInteger(), oneTimePad);
 
     }
-
-    private int[] getInts(Integer value, boolean isNegative) {
-        if (isNegative)
-            return value.toString().substring(1).chars().toArray();
-        else
-            return value.toString().chars().toArray();
-    }
-
     /**
      * Decrypt integer.
      *
@@ -56,10 +42,7 @@ public class IntegerCipherEngine {
      */
     public Integer decrypt(IntegerWrapper message) {
         Integer value = message.getEncryptedValue();
-        boolean isNegative = value < 0;
-        int[] values = getInts(value, isNegative);
-        NumberComposer composer = new NumberComposer(isNegative);
-        Arrays.stream(values).map(new DigitDecryptor(message.getOneTimePad())).forEach(composer);
+        NumberComposer composer = digitStreamCipher.decrypt(value.toString(), message.getOneTimePad());
         return composer.getInteger();
 
     }

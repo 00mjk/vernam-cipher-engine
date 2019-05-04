@@ -18,6 +18,7 @@ import java.util.function.IntUnaryOperator;
  * encrypted value is of the same size as the original which is important for many database
  * schemas or other logic.
  */
+@Deprecated
 public class UTF8DigitEncryptor implements IntUnaryOperator {
 
     private static final int LOWER_UTF8_LIMIT = 48;

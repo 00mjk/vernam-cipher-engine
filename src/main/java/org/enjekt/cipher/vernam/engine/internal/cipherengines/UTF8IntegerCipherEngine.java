@@ -14,6 +14,8 @@ import java.util.Arrays;
  */
 //TODO This was the prvious version which calculates rolling end points. It works and would
 //be perferable except for the case of the simplicity.
+
+@Deprecated
 public class UTF8IntegerCipherEngine {
 
     private static final int LOWER_UTF8_LIMIT = 48;
@@ -36,7 +38,7 @@ public class UTF8IntegerCipherEngine {
         boolean isNegative = value < 0;
         int[] values = getInts(value, isNegative);
         int[] oneTimePad = new int[values.length];
-        NumberComposer composer = new NumberComposer(isNegative);
+        NumberComposer composer = new NumberComposer().setNegative(isNegative);
         Arrays.stream(values).map(new UTF8DigitEncryptor(oneTimePad, MAX_UTF8)).forEach(composer);
         return new IntegerWrapper(composer.getInteger(), oneTimePad);
 
@@ -59,7 +61,7 @@ public class UTF8IntegerCipherEngine {
         Integer value = message.getEncryptedValue();
         boolean isNegative = value < 0;
         int[] values = getInts(value, isNegative);
-        NumberComposer composer = new NumberComposer(isNegative);
+        NumberComposer composer = new NumberComposer().setNegative(isNegative);
         Arrays.stream(values).map(new DigitDecryptor(message.getOneTimePad())).forEach(composer);
         return composer.getInteger();
 
