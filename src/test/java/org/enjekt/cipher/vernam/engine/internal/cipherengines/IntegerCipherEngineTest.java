@@ -85,7 +85,13 @@ public class IntegerCipherEngineTest {
     @Test
     // @Ignore
     public void timeTestCycles() {
-        int numberOfCycles = 1000000;
+
+        for (int i = 0; i < 100; i++)
+            timedTest();
+    }
+
+    private void timedTest() {
+        int numberOfCycles = 100000;
         System.out.println("Running bulk timed test of encyrpt/decrypt of " + numberOfCycles + " cylces.");
 
         List<Integer> testNumbers = new ArrayList<>(numberOfCycles);
@@ -116,7 +122,7 @@ public class IntegerCipherEngineTest {
         System.out.println(numberOfCycles + " decrypt operations in " + seconds + " milliseconds.");
         calculationsPerSecond = numberOfCycles / seconds;
         System.out.println("Number of decrypt operations per milliseconds: " + calculationsPerSecond);
-
+        System.out.println("*****************");
     }
 
     @Test
