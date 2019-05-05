@@ -6,7 +6,16 @@ import org.enjekt.cipher.vernam.engine.internal.functions.NumberComposer;
 
 /**
  * The type Integer cipher engine. All values during generation and handling are kept
- * as UTF8 ints and then asesmbled in the composer.
+ * as UTF8 ints and then asesmbled in the composer. As with all the cipher engines,
+ * this one is stateless and thread safe.
+ *
+ * The common DigitStreamCipher is used as for all whole number data type and the maximum digit size
+ * is passed in on the constructor.
+ *
+ *  The maximum size of an Integer is 2,147,483,647. The array is thus
+ *  be {2,1,4,7,4,8,3,6,4,7} or 10 digits long. Any integer to be enciphered which has a length of 10 must then
+ *  ensure that the first digit is 2 or less but not 0. Each cipher engine keeps a static final array of the
+ *  valid array of int for its type and passes it into the DigitStreamCipher when it instantiates it for processing.
  */
 public class IntegerCipherEngine {
 
