@@ -16,28 +16,28 @@ public class DigitStreamCipher {
 
 
     public int[] encipher(String value, NumberComposer composer) {
-        boolean isNegative = value.contains("-");
-        int[] values = getInts(value, isNegative);
-        int[] oneTimePad = new int[values.length];
 
-        composer.setNegative(isNegative);
+        int[] values = value.chars().toArray();
+        int[] oneTimePad = new int[getPadLength(value)];
+//System.out.printf("%s,%d,%d\n", value,values.length,oneTimePad.length);
         Arrays.stream(values).map(i -> i - LOWER_UTF8_LIMIT).map(new DigitEncryptor(maximumDigitsForDataType, oneTimePad)).map(i -> i + LOWER_UTF8_LIMIT).forEach(composer);
         return oneTimePad;
     }
 
+    private int getPadLength(String value) {
+        int padLength = value.length();
+        if (value.contains("-")) padLength--;
+        if (value.contains(".")) padLength--;
+        return padLength;
+    }
+
     public NumberComposer decipher(String value, int[] oneTimePad) {
-        boolean isNegative = value.contains("-");
-        int[] values = getInts(value, isNegative);
-        NumberComposer composer = new NumberComposer().setNegative(isNegative);
+        int[] values = value.chars().toArray();
+
+        NumberComposer composer = new NumberComposer();
         Arrays.stream(values).map(new DigitDecryptor(oneTimePad)).forEach(composer);
         return composer;
     }
 
 
-    private int[] getInts(String value, boolean isNegative) {
-        if (isNegative)
-            return value.substring(1).chars().toArray();
-        else
-            return value.chars().toArray();
-    }
 }

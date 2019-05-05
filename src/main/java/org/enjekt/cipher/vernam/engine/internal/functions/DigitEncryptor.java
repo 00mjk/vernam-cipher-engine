@@ -19,12 +19,15 @@ public class DigitEncryptor implements IntUnaryOperator {
 
 
     @Override
-    public int applyAsInt(int digit) {
+    public int applyAsInt(int operand) {
+        if (operand < 0 || operand > 9) return operand; //skip non digits like "-" or "."
+
+
         int pad = 0;
         int encryptVal = 0;
         do {
             pad = RandomNumberGenerator.nextInt(UPPER_RANGE);
-            encryptVal = (pad + digit) % 10;
+            encryptVal = (pad + operand) % 10;
             //Only in the extreme cases of MAX or MIN values for a data type will we run into situations
             //where the encrypted value isn't considered valid for a position or if we are at the leading
             //digit, a zero isn't valid. In that case, if a number is 5 digits, only the first digit needs

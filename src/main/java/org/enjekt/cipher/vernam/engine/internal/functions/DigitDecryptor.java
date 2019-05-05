@@ -17,6 +17,7 @@ public class DigitDecryptor implements IntUnaryOperator {
 
     @Override
     public int applyAsInt(int operand) {
+        if (operand < LOWER_UTF8_LIMIT || operand > UPPER_UTF8_LIMIT) return operand; //skip non digits like "-" or "."
         return dodecipher(operand, keys[count++]);
 
     }
