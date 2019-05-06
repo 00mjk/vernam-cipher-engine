@@ -33,8 +33,9 @@ public class LongCipherEngine {
 
     public Long decipher(LongWrapper message) {
         Long value = message.getEncryptedValue();
-        NumberComposer composer = digitStreamCipher.decipher(value.toString(), message.getOneTimePad());
-        return composer.getLong();
+        NumberComposer numberComposer = new NumberComposer();
+        digitStreamCipher.decipher(value.toString(), message.getOneTimePad(), numberComposer);
+        return numberComposer.getLong();
 
     }
 

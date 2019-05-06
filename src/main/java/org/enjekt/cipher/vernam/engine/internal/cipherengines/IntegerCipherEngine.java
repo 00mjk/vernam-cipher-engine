@@ -5,9 +5,9 @@ import org.enjekt.cipher.vernam.engine.internal.functions.NumberComposer;
 
 
 /**
- * The type Integer cipher engine. All values during generation and handling are kept
- * as UTF8 ints and then asesmbled in the composer. As with all the cipher engines,
- * this one is stateless and thread safe.
+ * The type Integer cipher engine. Individual digits are converted to 0 to 9 from their UTF8 to minimize
+ * calculations during enciphering and simplify logic. The deciphering is simpler and keeps UTF8 values for
+ * processing. As with all the cipher engines, this one is stateless and thread safe.
  *
  * The common DigitStreamCipher is used as for all whole number data type and the maximum digit size
  * is passed in on the constructor.
@@ -50,9 +50,11 @@ public class IntegerCipherEngine {
      * @return the integer
      */
     public Integer decipher(IntegerWrapper message) {
+        NumberComposer numberComposer = new NumberComposer();
+
         Integer value = message.getEncryptedValue();
-        NumberComposer composer = digitStreamCipher.decipher(value.toString(), message.getOneTimePad());
-        return composer.getInteger();
+        digitStreamCipher.decipher(value.toString(), message.getOneTimePad(), numberComposer);
+        return numberComposer.getInteger();
 
     }
 

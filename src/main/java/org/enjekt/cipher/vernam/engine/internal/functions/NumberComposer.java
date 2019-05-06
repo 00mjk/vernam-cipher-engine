@@ -10,6 +10,10 @@ public class NumberComposer implements IntConsumer {
         buffer.append((char) value);
     }
 
+    public void append(String toAppend) {
+        buffer.append(toAppend);
+    }
+
     public String getString() {
         return buffer.toString();
     }
@@ -22,4 +26,7 @@ public class NumberComposer implements IntConsumer {
         return Long.valueOf(buffer.toString());
     }
 
+    public Float getFloat() {
+        return Float.valueOf(buffer.toString());
+    }
 }

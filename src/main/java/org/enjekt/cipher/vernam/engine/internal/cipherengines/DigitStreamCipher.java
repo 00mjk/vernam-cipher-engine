@@ -2,9 +2,9 @@ package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.internal.functions.DigitDecryptor;
 import org.enjekt.cipher.vernam.engine.internal.functions.DigitEncryptor;
-import org.enjekt.cipher.vernam.engine.internal.functions.NumberComposer;
 
 import java.util.Arrays;
+import java.util.function.IntConsumer;
 
 /**
  * The type Digit stream cipher works for all digit streams created from long, Integer, Short.
@@ -40,7 +40,7 @@ public class DigitStreamCipher {
      * @param composer the composer
      * @return the int [ ]
      */
-    public int[] encipher(String value, NumberComposer composer) {
+    public int[] encipher(String value, IntConsumer composer) {
 
         int[] values = value.chars().toArray();
         int[] oneTimePad = new int[getPadLength(value)];
@@ -65,15 +65,14 @@ public class DigitStreamCipher {
      * @param oneTimePad the one time pad
      * @return the number composer
      */
-    public NumberComposer decipher(String value, int[] oneTimePad) {
+
+    public void decipher(String value, int[] oneTimePad, IntConsumer composer) {
         int[] values = value.chars().toArray();
 
-        NumberComposer composer = new NumberComposer();
         //We don't subtract UTF8 as in the encipher operation because we are not doing calculations of valid pad
         //values for leading zero or max values in this case. We are simply subtracting the oneTimePad and then
         //doing a modulo operation. So we avoid two extra operations per digit this way.
         Arrays.stream(values).map(new DigitDecryptor(oneTimePad)).forEach(composer);
-        return composer;
     }
 
 
