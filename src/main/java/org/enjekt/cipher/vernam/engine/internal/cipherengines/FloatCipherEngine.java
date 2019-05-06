@@ -6,6 +6,8 @@ import org.enjekt.cipher.vernam.engine.internal.functions.NumberComposer;
 
 /**
  * The type Flat cipher engine.
+ *
+ * TODO FloatCipherEngine is in rudimentary, crude form and isn't currently usable.
  */
 public class FloatCipherEngine {
 
