@@ -108,9 +108,9 @@ public class IntegerCipherEngineTest {
             wrappers.add(engine.encipher(underTest));
         }
         Instant end = clock.instant();
-        double seconds = (end.toEpochMilli() - start.toEpochMilli());
-        System.out.println(numberOfCycles + " encrypt operations in " + seconds + " milliseconds.");
-        double calculationsPerSecond = numberOfCycles / seconds;
+        double milliseconds = (end.toEpochMilli() - start.toEpochMilli());
+        System.out.println(numberOfCycles + " encrypt operations in " + milliseconds + " milliseconds.");
+        int calculationsPerSecond = (int) (numberOfCycles / milliseconds);
         System.out.println("Number of encrypt operations per millisecond: " + calculationsPerSecond);
 
         start = clock.instant();
@@ -118,9 +118,9 @@ public class IntegerCipherEngineTest {
             Integer decrypted = engine.decipher(wrapper);
         }
         end = clock.instant();
-        seconds = (end.toEpochMilli() - start.toEpochMilli());
-        System.out.println(numberOfCycles + " decrypt operations in " + seconds + " milliseconds.");
-        calculationsPerSecond = numberOfCycles / seconds;
+        milliseconds = (end.toEpochMilli() - start.toEpochMilli());
+        System.out.println(numberOfCycles + " decrypt operations in " + milliseconds + " milliseconds.");
+        calculationsPerSecond = (int) (numberOfCycles / milliseconds);
         System.out.println("Number of decrypt operations per milliseconds: " + calculationsPerSecond);
         System.out.println("*****************");
     }

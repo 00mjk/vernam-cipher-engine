@@ -7,6 +7,7 @@ public class NumberComposer implements IntConsumer {
 
     @Override
     public void accept(int value) {
+        // System.out.print(value +",");
         buffer.append((char) value);
     }
 

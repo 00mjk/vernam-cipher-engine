@@ -16,17 +16,6 @@ public class ScratchPad {
 
 
     @Test
-    public void doBigDecimal() {
-        Float f = 123.4567f;
-        int[] digits = f.toString().chars().map(c -> c - LOWER_UTF8_LIMIT).toArray();
-        Arrays.stream(digits).forEach(d -> System.out.print(d));
-        System.out.println();
-        // BigDecimal bd = new BigDecimal(f);
-        digits = Float.toString(Float.MAX_VALUE).chars().map(i -> i - LOWER_UTF8_LIMIT).toArray();
-        Arrays.stream(digits).forEach(d -> System.out.print(d));
-
-    }
-    @Test
     @Ignore
     public void testBits() {
         Long longVal = new Long(78757);

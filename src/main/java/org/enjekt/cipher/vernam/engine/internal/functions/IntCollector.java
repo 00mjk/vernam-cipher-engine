@@ -2,8 +2,9 @@ package org.enjekt.cipher.vernam.engine.internal.functions;
 
 import java.util.function.IntConsumer;
 
+import static org.enjekt.cipher.vernam.engine.internal.util.MathOps.MINUS_UTF8;
+
 public class IntCollector implements IntConsumer {
-    private static final int MINUS_UTF8 = 45;
     private final int[] values;
     private int counter;
 

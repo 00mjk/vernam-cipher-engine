@@ -4,24 +4,20 @@ public class FloatWrapper {
 
 
     private final Float encryptedValue;
-    private final int[] wholeOneTimePad;
-    private final int[] fractionalOneTimePad;
+    private final int[] oneTimePad;
 
-    public FloatWrapper(Float encryptedValue, int[] wholeOneTimePad, int[] fractionalOneTimePad) {
+    public FloatWrapper(Float encryptedValue, int[] oneTimePad) {
         this.encryptedValue = encryptedValue;
-        this.wholeOneTimePad = wholeOneTimePad;
-        this.fractionalOneTimePad = fractionalOneTimePad;
-    }
-
-    public int[] getFractionalOneTimePad() {
-        return fractionalOneTimePad;
+        this.oneTimePad = oneTimePad;
     }
 
     public Float getEncryptedValue() {
         return encryptedValue;
     }
 
-    public int[] getWholeOneTimePad() {
-        return wholeOneTimePad;
+    public int[] getOneTimePad() {
+        return oneTimePad;
     }
+
+
 }

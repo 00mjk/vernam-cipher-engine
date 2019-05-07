@@ -4,10 +4,11 @@ import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
 
 import java.util.function.IntUnaryOperator;
 
+import static org.enjekt.cipher.vernam.engine.internal.util.MathOps.BASE;
+import static org.enjekt.cipher.vernam.engine.internal.util.MathOps.UPPER_RANGE;
+
 public class DigitEncryptor implements IntUnaryOperator {
 
-    private static final int UPPER_RANGE = 9;
-    private static final int BASE = 10;
     private final int[] oneTimePad;
     private int counter;
     private DigitValidator validator;
@@ -27,7 +28,7 @@ public class DigitEncryptor implements IntUnaryOperator {
         int encryptVal = 0;
         do {
             pad = RandomNumberGenerator.nextInt(UPPER_RANGE);
-            encryptVal = (pad + operand) % 10;
+            encryptVal = (pad + operand) % BASE;
             //Only in the extreme cases of MAX or MIN values for a data type will we run into situations
             //where the encrypted value isn't considered valid for a position or if we are at the leading
             //digit, a zero isn't valid. In that case, if a number is 5 digits, only the first digit needs

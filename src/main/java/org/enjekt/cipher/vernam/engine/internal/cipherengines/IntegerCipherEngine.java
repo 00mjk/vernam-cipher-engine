@@ -39,7 +39,7 @@ public class IntegerCipherEngine {
      */
     public IntegerWrapper encipher(Integer value) {
         NumberComposer numberComposer = new NumberComposer();
-        int[] oneTimePad = digitStreamCipher.encipher(value.toString(), numberComposer);
+        int[] oneTimePad = digitStreamCipher.encipher(value.toString().chars().toArray(), numberComposer);
         return new IntegerWrapper(numberComposer.getInteger(), oneTimePad);
 
     }
@@ -53,7 +53,7 @@ public class IntegerCipherEngine {
         NumberComposer numberComposer = new NumberComposer();
 
         Integer value = message.getEncryptedValue();
-        digitStreamCipher.decipher(value.toString(), message.getOneTimePad(), numberComposer);
+        digitStreamCipher.decipher(value.toString().chars().toArray(), message.getOneTimePad(), numberComposer);
         return numberComposer.getInteger();
 
     }
