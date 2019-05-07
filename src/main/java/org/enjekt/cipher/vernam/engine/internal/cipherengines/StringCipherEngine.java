@@ -2,7 +2,11 @@ package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 
 import org.enjekt.cipher.vernam.engine.api.StringWrapper;
+import org.enjekt.cipher.vernam.engine.internal.functions.AddWrapLimit;
+import org.enjekt.cipher.vernam.engine.internal.functions.IntCollector;
 import org.enjekt.cipher.vernam.engine.internal.functions.StringComposer;
+import org.enjekt.cipher.vernam.engine.internal.functions.SubtractWrapLimit;
+import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
 
 import java.util.Arrays;
 
@@ -14,12 +18,9 @@ public class StringCipherEngine {
 
     private static final int LOWER_UTF8_LIMIT = 32;
     private static final int UPPER_UTF8_LIMIT = 126;
+    private static final int lowerKeyRange = 0;
+    private static final int upperKeyRange = UPPER_UTF8_LIMIT - LOWER_UTF8_LIMIT;
 
-
-    /**
-     * The Cipher engine which handles UTF8 and key generation.
-     */
-    private final UTF8CipherEngine cipherEngine = new UTF8CipherEngine(LOWER_UTF8_LIMIT, UPPER_UTF8_LIMIT);
 
 
     /**
@@ -31,7 +32,7 @@ public class StringCipherEngine {
      */
     public StringWrapper encipher(String value) {
 
-        EncryptedResultsHolder holder = cipherEngine.encipher(value.chars().toArray());
+        EncryptedResultsHolder holder = encipher(value.chars().toArray());
 
         StringComposer composer = new StringComposer();
         Arrays.stream(holder.getValues()).forEach(composer);
@@ -48,12 +49,44 @@ public class StringCipherEngine {
      */
     public String decipher(StringWrapper wrapper) {
 
-        int[] utf8Values = cipherEngine.decipher(wrapper.getEncryptedText().chars().toArray(), wrapper.getEncryptionKeys());
+        int[] utf8Values = decipher(wrapper.getEncryptedText().chars().toArray(), wrapper.getEncryptionKeys());
         StringComposer composer = new StringComposer();
         Arrays.stream(utf8Values).forEach(composer);
         return composer.getString();
     }
 
+    /**
+     * Decrypt value composer.
+     *
+     * @param values     the toDecrypt
+     * @param oneTimePad the encryption keys
+     * @return the value composer
+     */
+    public int[] decipher(int[] values, int[] oneTimePad) {
+
+        IntCollector collector = new IntCollector(values.length);
+        Arrays.stream(values).map(new SubtractWrapLimit(oneTimePad, LOWER_UTF8_LIMIT, upperKeyRange + 1)).forEach(collector);
+
+        return collector.getValues();
+
+
+    }
+
+    /**
+     * Encrypt encrypted results holder.
+     *
+     * @param values the value
+     * @return the encrypted results holder
+     */
+    public EncryptedResultsHolder encipher(int[] values) {
+        int[] oneTimePad = RandomNumberGenerator.ints(values.length, lowerKeyRange, upperKeyRange).toArray();
+        EncryptedResultsHolder holder = new EncryptedResultsHolder(oneTimePad);
+        Arrays.stream(values).map(new AddWrapLimit(oneTimePad, UPPER_UTF8_LIMIT, upperKeyRange + 1)).forEach(holder);
+
+        return holder;
+
+
+    }
 
 }
 
