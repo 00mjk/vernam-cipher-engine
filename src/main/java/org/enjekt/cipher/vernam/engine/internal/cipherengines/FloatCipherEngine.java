@@ -8,11 +8,16 @@ import java.math.BigDecimal;
 
 
 /**
- * The type Flat cipher engine.
+ * The type float cipher engine.
+ *
  */
+
+//  TODO This is still a work in progress and we have to ensure that the enciphering of MAX/MIN values works correctly.
+//   This is currently technically inaccurate and shouldn't be used.
+
+
 public class FloatCipherEngine {
 
-    private static final int LOWER_UTF8_LIMIT = 48;
 
     private static final int[] MAX_UTF8;
     private static final int[] MAX_DIGITS;
