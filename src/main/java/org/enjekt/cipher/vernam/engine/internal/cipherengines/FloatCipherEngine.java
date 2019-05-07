@@ -50,7 +50,6 @@ public class FloatCipherEngine {
         String floatStr = message.getEncryptedValue().toString();
         if (floatStr.contains("E"))
             floatStr = new BigDecimal(message.getEncryptedValue()).toString();
-        new BigDecimal(message.getEncryptedValue()).toString();
 
         NumberComposer numberComposer = new NumberComposer();
 
