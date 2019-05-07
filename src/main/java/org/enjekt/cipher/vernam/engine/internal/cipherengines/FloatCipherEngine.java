@@ -1,7 +1,10 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.api.FloatWrapper;
+import org.enjekt.cipher.vernam.engine.internal.functions.Digit;
 import org.enjekt.cipher.vernam.engine.internal.functions.NumberComposer;
+
+import java.math.BigDecimal;
 
 
 /**
@@ -15,8 +18,8 @@ public class FloatCipherEngine {
     private static final int[] MAX_DIGITS;
 
     static {
-        MAX_UTF8 = Float.toString(Float.MAX_VALUE).chars().toArray();
-        MAX_DIGITS = Float.toString(Float.MAX_VALUE).chars().map(i -> i - LOWER_UTF8_LIMIT).toArray();
+        MAX_UTF8 = new BigDecimal(Float.MAX_VALUE).toString().chars().toArray();
+        MAX_DIGITS = new BigDecimal(Float.MAX_VALUE).toString().chars().map(Digit::toInt).toArray();
     }
 
     private static final DigitStreamCipher digitStreamCipher = new DigitStreamCipher(MAX_DIGITS);
@@ -29,10 +32,10 @@ public class FloatCipherEngine {
      */
     public FloatWrapper encipher(Float value) {
 
-        String floatStr = value.toString();
-
+        String floatStr = new BigDecimal(value).toString();
+        System.out.println(floatStr);
         NumberComposer numberComposer = new NumberComposer();
-        int[] oneTimePad = digitStreamCipher.encipher(value.toString().chars().toArray(), numberComposer);
+        int[] oneTimePad = digitStreamCipher.encipher(floatStr.chars().toArray(), numberComposer);
         return new FloatWrapper(numberComposer.getFloat(), oneTimePad);
 
     }
@@ -44,7 +47,7 @@ public class FloatCipherEngine {
      * @return the integer
      */
     public Float decipher(FloatWrapper message) {
-        String floatStr = message.getEncryptedValue().toString();
+        String floatStr = new BigDecimal(message.getEncryptedValue()).toString();
 
         NumberComposer numberComposer = new NumberComposer();
 
