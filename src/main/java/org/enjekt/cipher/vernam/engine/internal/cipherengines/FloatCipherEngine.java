@@ -31,9 +31,9 @@ public class FloatCipherEngine {
      * @return the integer wrapper
      */
     public FloatWrapper encipher(Float value) {
-
-        String floatStr = new BigDecimal(value).toString();
-        System.out.println(floatStr);
+        String floatStr = value.toString();
+        if (floatStr.contains("E"))
+            floatStr = new BigDecimal(value).toString();
         NumberComposer numberComposer = new NumberComposer();
         int[] oneTimePad = digitStreamCipher.encipher(floatStr.chars().toArray(), numberComposer);
         return new FloatWrapper(numberComposer.getFloat(), oneTimePad);
@@ -47,7 +47,10 @@ public class FloatCipherEngine {
      * @return the integer
      */
     public Float decipher(FloatWrapper message) {
-        String floatStr = new BigDecimal(message.getEncryptedValue()).toString();
+        String floatStr = message.getEncryptedValue().toString();
+        if (floatStr.contains("E"))
+            floatStr = new BigDecimal(message.getEncryptedValue()).toString();
+        new BigDecimal(message.getEncryptedValue()).toString();
 
         NumberComposer numberComposer = new NumberComposer();
 
