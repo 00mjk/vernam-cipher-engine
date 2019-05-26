@@ -3,7 +3,6 @@ package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.api.StringWrapper;
 import org.enjekt.cipher.vernam.engine.internal.functions.AddWrapLimit;
-import org.enjekt.cipher.vernam.engine.internal.functions.StringComposer;
 import org.enjekt.cipher.vernam.engine.internal.functions.SubtractWrapLimit;
 import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
 
@@ -29,11 +28,11 @@ public class StringCipherEngine {
      */
     public StringWrapper encipher(String value) {
 
-        StringComposer composer = new StringComposer();
+        StringBuffer buffer = new StringBuffer();
         int[] oneTimePad = RandomNumberGenerator.ints(value.length(), lowerKeyRange, upperKeyRange).toArray();
-        value.chars().map(new AddWrapLimit(oneTimePad, UPPER_UTF8_LIMIT, upperKeyRange + 1)).forEach(composer);
+        value.chars().map(new AddWrapLimit(oneTimePad, UPPER_UTF8_LIMIT, upperKeyRange + 1)).forEach(c -> buffer.append((char) c));
 
-        return new StringWrapper(composer.getString(), oneTimePad);
+        return new StringWrapper(buffer.toString(), oneTimePad);
 
     }
 
@@ -45,11 +44,10 @@ public class StringCipherEngine {
      * @return the string
      */
     public String decipher(StringWrapper wrapper) {
+        StringBuffer buffer = new StringBuffer();
+        wrapper.getEncryptedText().chars().map(new SubtractWrapLimit(wrapper.getEncryptionKeys(), LOWER_UTF8_LIMIT, upperKeyRange + 1)).forEach(c -> buffer.append((char) c));
 
-        StringComposer composer = new StringComposer();
-        wrapper.getEncryptedText().chars().map(new SubtractWrapLimit(wrapper.getEncryptionKeys(), LOWER_UTF8_LIMIT, upperKeyRange + 1)).forEach(composer);
-
-        return composer.getString();
+        return buffer.toString();
     }
 
 
