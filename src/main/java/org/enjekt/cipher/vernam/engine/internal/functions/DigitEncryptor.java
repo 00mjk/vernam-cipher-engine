@@ -1,6 +1,7 @@
 package org.enjekt.cipher.vernam.engine.internal.functions;
 
 import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
+import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGeneratorFactory;
 
 import java.util.function.IntUnaryOperator;
 
@@ -12,6 +13,7 @@ public class DigitEncryptor implements IntUnaryOperator {
     private final int[] oneTimePad;
     private int counter;
     private DigitValidator validator;
+    private RandomNumberGenerator randomNumberGenerator = RandomNumberGeneratorFactory.getGenerator();
 
     public DigitEncryptor(int[] MAX_DIGITS, int[] oneTimePad) {
         this.oneTimePad = oneTimePad;
@@ -27,7 +29,7 @@ public class DigitEncryptor implements IntUnaryOperator {
         int pad = 0;
         int encryptVal = 0;
         do {
-            pad = RandomNumberGenerator.nextInt(UPPER_RANGE);
+            pad = randomNumberGenerator.nextInt(UPPER_RANGE);
             encryptVal = (pad + operand) % BASE;
             //Only in the extreme cases of MAX or MIN values for a data type will we run into situations
             //where the encrypted value isn't considered valid for a position or if we are at the leading

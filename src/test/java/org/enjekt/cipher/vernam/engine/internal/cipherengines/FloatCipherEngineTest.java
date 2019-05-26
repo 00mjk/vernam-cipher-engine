@@ -1,7 +1,7 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.api.BigDecimalWrapper;
-import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
+import org.enjekt.cipher.vernam.engine.internal.util.SecureRandomNumberGeneratorImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 //@Ignore
 public class FloatCipherEngineTest {
 
-    RandomNumberGenerator random = new RandomNumberGenerator();
+    SecureRandomNumberGeneratorImpl random = new SecureRandomNumberGeneratorImpl();
     private FloatCipherEngine engine;
 
     @Before

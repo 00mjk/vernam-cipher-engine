@@ -1,101 +1,47 @@
 package org.enjekt.cipher.vernam.engine.internal.util;
 
-import java.security.SecureRandom;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
-public class RandomNumberGenerator {
-    private static final SecureRandom secureRandom = new SecureRandom();
+public interface RandomNumberGenerator {
+    void nextBytes(byte[] bytes);
 
+    int nextInt();
 
-    public static void nextBytes(byte[] bytes) {
-        secureRandom.nextBytes(bytes);
-    }
+    int nextInt(int bound);
 
-/*
+    long nextLong();
 
-    public static SecureRandom getInstanceStrong() throws NoSuchAlgorithmException {
-    //TODO This should be configured in the init...
-        return SecureRandom.getInstanceStrong();
-    }
-*/
+    boolean nextBoolean();
 
-    public static int nextInt() {
-        return secureRandom.nextInt();
-    }
+    float nextFloat();
 
-    public static int nextInt(int bound) {
-        return secureRandom.nextInt(bound);
-    }
+    double nextDouble();
 
-    public static long nextLong() {
-        return secureRandom.nextLong();
-    }
+    double nextGaussian();
 
-    public static boolean nextBoolean() {
-        return secureRandom.nextBoolean();
-    }
+    IntStream ints(long streamSize);
 
-    public static float nextFloat() {
-        return secureRandom.nextFloat();
-    }
+    IntStream ints();
 
-    public static double nextDouble() {
-        return secureRandom.nextDouble();
-    }
+    IntStream ints(long streamSize, int randomNumberOrigin, int randomNumberBound);
 
-    public static double nextGaussian() {
-        return secureRandom.nextGaussian();
-    }
+    IntStream ints(int randomNumberOrigin, int randomNumberBound);
 
-    public static IntStream ints(long streamSize) {
-        return secureRandom.ints(streamSize);
-    }
+    LongStream longs(long streamSize);
 
-    public static IntStream ints() {
-        return secureRandom.ints();
-    }
+    LongStream longs();
 
-    public static IntStream ints(long streamSize, int randomNumberOrigin, int randomNumberBound) {
-        return secureRandom.ints(streamSize, randomNumberOrigin, randomNumberBound);
-    }
+    LongStream longs(long streamSize, long randomNumberOrigin, long randomNumberBound);
 
-    public static IntStream ints(int randomNumberOrigin, int randomNumberBound) {
-        return secureRandom.ints(randomNumberOrigin, randomNumberBound);
-    }
+    LongStream longs(long randomNumberOrigin, long randomNumberBound);
 
-    public static LongStream longs(long streamSize) {
-        return secureRandom.longs(streamSize);
-    }
+    DoubleStream doubles(long streamSize);
 
-    public static LongStream longs() {
-        return secureRandom.longs();
-    }
+    DoubleStream doubles();
 
-    public static LongStream longs(long streamSize, long randomNumberOrigin, long randomNumberBound) {
-        return secureRandom.longs(streamSize, randomNumberOrigin, randomNumberBound);
-    }
+    DoubleStream doubles(long streamSize, double randomNumberOrigin, double randomNumberBound);
 
-    public static LongStream longs(long randomNumberOrigin, long randomNumberBound) {
-        return secureRandom.longs(randomNumberOrigin, randomNumberBound);
-    }
-
-    public static DoubleStream doubles(long streamSize) {
-        return secureRandom.doubles(streamSize);
-    }
-
-    public static DoubleStream doubles() {
-        return secureRandom.doubles();
-    }
-
-    public static DoubleStream doubles(long streamSize, double randomNumberOrigin, double randomNumberBound) {
-        return secureRandom.doubles(streamSize, randomNumberOrigin, randomNumberBound);
-    }
-
-    public static DoubleStream doubles(double randomNumberOrigin, double randomNumberBound) {
-        return secureRandom.doubles(randomNumberOrigin, randomNumberBound);
-    }
-
-
+    DoubleStream doubles(double randomNumberOrigin, double randomNumberBound);
 }

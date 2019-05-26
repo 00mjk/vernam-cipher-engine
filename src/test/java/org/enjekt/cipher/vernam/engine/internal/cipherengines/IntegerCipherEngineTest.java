@@ -1,7 +1,8 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
 import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
-import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
+import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGeneratorFactory;
+import org.enjekt.cipher.vernam.engine.internal.util.SecureRandomNumberGeneratorImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ import static org.junit.Assert.assertNotEquals;
 
 public class IntegerCipherEngineTest {
 
-    RandomNumberGenerator random = new RandomNumberGenerator();
+    SecureRandomNumberGeneratorImpl random = new SecureRandomNumberGeneratorImpl();
     private IntegerCipherEngine engine;
 
     @Before
@@ -67,7 +68,7 @@ public class IntegerCipherEngineTest {
         System.out.println("Running bulk encyrpt/decrypt of " + numberOfCycles + " cylces.");
         System.out.println(Integer.valueOf(Integer.MAX_VALUE).toString().chars().toArray().length);
         for (int i = 0; i < numberOfCycles; i++) {
-            Integer underTest = RandomNumberGenerator.nextInt();
+            Integer underTest = RandomNumberGeneratorFactory.getGenerator().nextInt();
             IntegerWrapper wrapper = engine.encipher(underTest);
             //TODO It is possible that the pad will result in the same number.
             //  assertNotEquals(wrapper.getEncryptedValue(), underTest);
@@ -96,7 +97,7 @@ public class IntegerCipherEngineTest {
 
         List<Integer> testNumbers = new ArrayList<>(numberOfCycles);
         for (int i = 0; i < numberOfCycles; i++)
-            testNumbers.add(RandomNumberGenerator.nextInt());
+            testNumbers.add(RandomNumberGeneratorFactory.getGenerator().nextInt());
 
         Clock clock = Clock.systemUTC();
         Instant start = clock.instant();

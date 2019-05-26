@@ -1,6 +1,7 @@
 package org.enjekt.cipher.vernam.engine.internal;
 
-import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
+import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGeneratorFactory;
+import org.enjekt.cipher.vernam.engine.internal.util.SecureRandomNumberGeneratorImpl;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ import java.util.BitSet;
 
 public class ScratchPad {
     private static final int LOWER_UTF8_LIMIT = 48;
-    private static final RandomNumberGenerator secureRandom = new RandomNumberGenerator();
+    private static final SecureRandomNumberGeneratorImpl secureRandom = new SecureRandomNumberGeneratorImpl();
     String toTest = "I see dead sheep...sometimes...";
 
 
@@ -25,7 +26,7 @@ public class ScratchPad {
         System.out.println();
         long[] vals = lBuffer.array();
         BitSet bs = BitSet.valueOf(vals);
-        long[] otp = RandomNumberGenerator.longs(vals.length, 0, 9).toArray();
+        long[] otp = RandomNumberGeneratorFactory.getGenerator().longs(vals.length, 0, 9).toArray();
         // System.out.println(otp.length);
         BitSet pad = BitSet.valueOf(otp);
         Arrays.stream(bs.toLongArray()).forEach(l -> System.out.print(l));
@@ -50,7 +51,7 @@ public class ScratchPad {
         int length = value.toString().length();
         int lowerBound = (int) Math.pow(10, length - 1);
         //System.out.println(lowerBound);
-        int rnd = lowerBound + RandomNumberGenerator.nextInt(9 * lowerBound);
+        int rnd = lowerBound + RandomNumberGeneratorFactory.getGenerator().nextInt(9 * lowerBound);
         //System.out.println(rnd);
         int tempValue = (value ^ rnd);
         System.out.println(tempValue);
@@ -68,7 +69,7 @@ public class ScratchPad {
         StringBuffer buffer = new StringBuffer();
         //	secureRandom.ints(plainBytes.length,32,126).forEach(c -> buffer.append((char)c));
         //	keyBytes = buffer.toString().getBytes(charSet);
-        RandomNumberGenerator.nextBytes(keyBytes);
+        RandomNumberGeneratorFactory.getGenerator().nextBytes(keyBytes);
 
         byte[] cipherBytes = new byte[plainBytes.length];
         for (int i = 0; i < plainBytes.length; i++) {
