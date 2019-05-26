@@ -32,7 +32,7 @@ public class DigitEncryptor implements IntUnaryOperator {
             //Only in the extreme cases of MAX or MIN values for a data type will we run into situations
             //where the encrypted value isn't considered valid for a position or if we are at the leading
             //digit, a zero isn't valid. In that case, if a number is 5 digits, only the first digit needs
-            //to ensure it is not a leading zero. So only 1 of 5 encryptions will be concerned. On that first encryption
+            //to ensure it is not a leading zero. So only 1 of 5 encipher ops will be concerned. On that first encryption
             //the probability is on 1 in 10 that a leading zero encrypted value will be generated. If it is, we simply
             //loop and repeat. We could do more calculation in the future but it is really squeezing blood from a stone.
         } while (!validator.isValid(counter, encryptVal));

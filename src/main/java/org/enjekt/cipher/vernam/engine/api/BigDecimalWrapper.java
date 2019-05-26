@@ -1,17 +1,18 @@
 package org.enjekt.cipher.vernam.engine.api;
 
-public class FloatWrapper {
+import java.math.BigDecimal;
 
+public class BigDecimalWrapper {
 
-    private final Float encryptedValue;
+    private final BigDecimal encryptedValue;
     private final int[] oneTimePad;
 
-    public FloatWrapper(Float encryptedValue, int[] oneTimePad) {
+    public BigDecimalWrapper(BigDecimal encryptedValue, int[] oneTimePad) {
         this.encryptedValue = encryptedValue;
         this.oneTimePad = oneTimePad;
     }
 
-    public Float getEncryptedValue() {
+    public BigDecimal getEncryptedValue() {
         return encryptedValue;
     }
 

@@ -1,5 +1,6 @@
 package org.enjekt.cipher.vernam.engine.internal.functions;
 
+import java.math.BigDecimal;
 import java.util.function.IntConsumer;
 
 public class NumberComposer implements IntConsumer {
@@ -27,7 +28,7 @@ public class NumberComposer implements IntConsumer {
         return Long.valueOf(buffer.toString());
     }
 
-    public Float getFloat() {
-        return Float.valueOf(buffer.toString());
+    public BigDecimal getBigDecimal() {
+        return new BigDecimal(buffer.toString());
     }
 }

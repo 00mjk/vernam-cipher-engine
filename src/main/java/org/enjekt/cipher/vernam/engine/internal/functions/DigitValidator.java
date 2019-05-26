@@ -14,8 +14,9 @@ public class DigitValidator {
 
         if (position == 0 && value == 0) return Boolean.FALSE;
         if (allValid) return Boolean.TRUE;
-        if (MAX_DIGIT[position] < value) return Boolean.FALSE;
 
+
+        if (MAX_DIGIT[position] < value) return Boolean.FALSE;
         if (MAX_DIGIT[position] > value) allValid = Boolean.TRUE;
 
         //if we are here then the value was either less than or equal to the maximum for the position.

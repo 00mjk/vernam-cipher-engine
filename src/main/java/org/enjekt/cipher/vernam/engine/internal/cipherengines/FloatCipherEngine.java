@@ -1,6 +1,6 @@
 package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 
-import org.enjekt.cipher.vernam.engine.api.FloatWrapper;
+import org.enjekt.cipher.vernam.engine.api.BigDecimalWrapper;
 import org.enjekt.cipher.vernam.engine.internal.functions.Digit;
 import org.enjekt.cipher.vernam.engine.internal.functions.NumberComposer;
 
@@ -35,13 +35,11 @@ public class FloatCipherEngine {
      * @param value the value
      * @return the integer wrapper
      */
-    public FloatWrapper encipher(Float value) {
-        String floatStr = value.toString();
-        if (floatStr.contains("E"))
-            floatStr = new BigDecimal(value).toString();
+    public BigDecimalWrapper encipher(BigDecimal value) {
+
         NumberComposer numberComposer = new NumberComposer();
-        int[] oneTimePad = digitStreamCipher.encipher(floatStr.chars().toArray(), numberComposer);
-        return new FloatWrapper(numberComposer.getFloat(), oneTimePad);
+        int[] oneTimePad = digitStreamCipher.encipher(value.toPlainString().chars().toArray(), numberComposer);
+        return new BigDecimalWrapper(numberComposer.getBigDecimal(), oneTimePad);
 
     }
 
@@ -51,17 +49,17 @@ public class FloatCipherEngine {
      * @param message the message
      * @return the integer
      */
-    public Float decipher(FloatWrapper message) {
+    public BigDecimal decipher(BigDecimalWrapper message) {
         String floatStr = message.getEncryptedValue().toString();
         if (floatStr.contains("E"))
-            floatStr = new BigDecimal(message.getEncryptedValue()).toString();
+            floatStr = message.getEncryptedValue().toString();
 
         NumberComposer numberComposer = new NumberComposer();
 
         digitStreamCipher.decipher(floatStr.chars().toArray(), message.getOneTimePad(), numberComposer);
 
 
-        return numberComposer.getFloat();
+        return numberComposer.getBigDecimal();
 
     }
 
