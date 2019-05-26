@@ -1,5 +1,5 @@
 # vernam-cipher-engine
-Vernam Cipher Engine using Java streams to create OTP and encrypted value of same data type, length and sign.
+Vernam Cipher Engine using Java streams to create a one time pad and enciphered value of same data type, length and sign as the original. Useful for when data types need to match data types of Java beans or database fields.
 
 # Perfect Secrecy
 Used by the US and USSR in the cold war, the Vernam Cipher was an unbreakable method of enciphering and deciphering messages. Unlike many 
