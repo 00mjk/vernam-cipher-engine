@@ -38,7 +38,7 @@ public class FloatCipherEngine {
     public BigDecimalWrapper encipher(BigDecimal value) {
 
         NumberComposer numberComposer = new NumberComposer();
-        int[] oneTimePad = digitStreamCipher.encipher(value.toPlainString().chars().toArray(), numberComposer);
+        int[] oneTimePad = digitStreamCipher.encipher(value.toPlainString(), numberComposer);
         return new BigDecimalWrapper(numberComposer.getBigDecimal(), oneTimePad);
 
     }

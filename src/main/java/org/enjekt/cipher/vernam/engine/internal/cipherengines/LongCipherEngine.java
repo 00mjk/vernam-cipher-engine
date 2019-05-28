@@ -26,7 +26,7 @@ public class LongCipherEngine {
 
     public LongWrapper encipher(Long value) {
         NumberComposer numberComposer = new NumberComposer();
-        int[] oneTimePad = digitStreamCipher.encipher(value.toString().chars().toArray(), numberComposer);
+        int[] oneTimePad = digitStreamCipher.encipher(value.toString(), numberComposer);
         return new LongWrapper(numberComposer.getLong(), oneTimePad);
 
     }

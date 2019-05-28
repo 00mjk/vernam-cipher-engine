@@ -3,6 +3,8 @@ package org.enjekt.cipher.vernam.engine.internal.cipherengines;
 import org.enjekt.cipher.vernam.engine.internal.functions.Digit;
 import org.enjekt.cipher.vernam.engine.internal.functions.DigitDecryptor;
 import org.enjekt.cipher.vernam.engine.internal.functions.DigitEncryptor;
+import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
+import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGeneratorFactory;
 
 import java.util.Arrays;
 import java.util.function.IntConsumer;
@@ -23,6 +25,7 @@ import java.util.function.IntConsumer;
 public class DigitStreamCipher {
 
     private final int[] maximumDigitsForDataType;
+    private RandomNumberGenerator randomNumberGenerator = RandomNumberGeneratorFactory.getGenerator();
 
     /**
      * Instantiates a new Digit stream cipher.
@@ -34,13 +37,13 @@ public class DigitStreamCipher {
     }
 
 
-    public int[] encipher(int[] values, IntConsumer composer) {
+    public int[] encipher(String value, IntConsumer composer) {
 
-        int[] oneTimePad = new int[values.length];
+        int[] oneTimePad = randomNumberGenerator.ints(value.length()).toArray();
         //We do a number of numeric operations on the digit for wrapping, leading zero, max value and so on
         //and it is simpler and faster to strip the UTF8 values off and manipulate the digits as 0..9 int and
         //then simply add the lower value of 0 in UTF8 back as the last step.
-        Arrays.stream(values).map(Digit::toInt).map(new DigitEncryptor(maximumDigitsForDataType, oneTimePad)).map(Digit::toUTF).forEach(composer);
+        value.chars().map(Digit::toInt).map(new DigitEncryptor(maximumDigitsForDataType, oneTimePad)).map(Digit::toUTF).forEach(composer);
         return oneTimePad;
     }
 

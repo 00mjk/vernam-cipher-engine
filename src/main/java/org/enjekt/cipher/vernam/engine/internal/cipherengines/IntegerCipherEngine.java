@@ -39,7 +39,7 @@ public class IntegerCipherEngine {
      */
     public IntegerWrapper encipher(Integer value) {
         NumberComposer numberComposer = new NumberComposer();
-        int[] oneTimePad = digitStreamCipher.encipher(value.toString().chars().toArray(), numberComposer);
+        int[] oneTimePad = digitStreamCipher.encipher(value.toString(), numberComposer);
         return new IntegerWrapper(numberComposer.getInteger(), oneTimePad);
 
     }
