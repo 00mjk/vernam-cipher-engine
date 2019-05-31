@@ -92,7 +92,7 @@ public class IntegerCipherEngineTest {
     }
 
     private void timedTest() {
-        int numberOfCycles = 100000;
+        int numberOfCycles = 10000;
         System.out.println("Running bulk timed test of encyrpt/decrypt of " + numberOfCycles + " cylces.");
 
         List<Integer> testNumbers = new ArrayList<>(numberOfCycles);
