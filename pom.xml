@@ -46,15 +46,6 @@
     <dependencyManagement>
         <dependencies>
 
-            <!-- Import Fuse Dependency Management via BOM -->
-            <!-- https://mvnrepository.com/artifact/org.jboss.fuse.bom/jboss-fuse-parent -->
-            <!--            <dependency>
-                            <groupId>org.jboss.fuse.bom</groupId>
-                            <artifactId>jboss-fuse-parent</artifactId>
-                            <version>6.3.0.redhat-389</version>
-                            <type>pom</type>
-                            <scope>import</scope>
-                        </dependency>-->
             <!-- https://mvnrepository.com/artifact/org.apache.karaf/apache-karaf -->
             <dependency>
                 <groupId>org.apache.karaf</groupId>
@@ -75,6 +66,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-math3</artifactId>
                 <version>3.6.1</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.5</version>
             </dependency>
 
 
@@ -118,7 +115,11 @@
             <artifactId>commons-math3</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <defaultGoal>install</defaultGoal>

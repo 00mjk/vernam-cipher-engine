@@ -1,13 +1,10 @@
 package org.enjekt.cipher.vernam.engine.internal;
 
-import org.enjekt.cipher.vernam.engine.api.IntegerWrapper;
-import org.enjekt.cipher.vernam.engine.api.LongWrapper;
-import org.enjekt.cipher.vernam.engine.api.StringWrapper;
-import org.enjekt.cipher.vernam.engine.api.VernamCipherEngine;
-import org.enjekt.cipher.vernam.engine.internal.cipherengines.IntegerCipherEngine;
-import org.enjekt.cipher.vernam.engine.internal.cipherengines.LongCipherEngine;
-import org.enjekt.cipher.vernam.engine.internal.cipherengines.StringCipherEngine;
+import org.enjekt.cipher.vernam.engine.api.*;
+import org.enjekt.cipher.vernam.engine.internal.cipherengines.*;
 import org.osgi.service.component.annotations.Component;
+
+import java.math.BigDecimal;
 
 @Component
 public class VernamCipherEngineImpl implements VernamCipherEngine {
@@ -15,6 +12,8 @@ public class VernamCipherEngineImpl implements VernamCipherEngine {
     private final StringCipherEngine stringCipherEngine = new StringCipherEngine();
     private final IntegerCipherEngine integerCipherEngine = new IntegerCipherEngine();
     private final LongCipherEngine longCipherEngine = new LongCipherEngine();
+    private final FloatCipherEngine floatCipherEngine = new FloatCipherEngine();
+    private final BooleanCipherEngine booleanCipherEngine = new BooleanCipherEngine();
 
     @Override
     public StringWrapper encipher(String messageToEncrypt) {
@@ -46,5 +45,25 @@ public class VernamCipherEngineImpl implements VernamCipherEngine {
         return longCipherEngine.decipher(wrapper);
     }
 
+    @Override
+    public BooleanWrapper encipher(Boolean value) {
+        return booleanCipherEngine.encipher(value);
+    }
+
+    @Override
+    public Boolean decipher(BooleanWrapper message) {
+        return booleanCipherEngine.decipher(message);
+    }
+
+
+    @Override
+    public BigDecimalWrapper encipher(BigDecimal value) {
+        return floatCipherEngine.encipher(value);
+    }
+
+    @Override
+    public BigDecimal decipher(BigDecimalWrapper message) {
+        return floatCipherEngine.decipher(message);
+    }
 
 }

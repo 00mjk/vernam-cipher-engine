@@ -1,5 +1,7 @@
 package org.enjekt.cipher.vernam.engine.api;
 
+import java.math.BigDecimal;
+
 public interface VernamCipherEngine {
 
     StringWrapper encipher(String messageToEncryt);
@@ -13,4 +15,12 @@ public interface VernamCipherEngine {
     LongWrapper encipher(Long value);
 
     Long decipher(LongWrapper wrapper);
+
+    BooleanWrapper encipher(Boolean value);
+
+    Boolean decipher(BooleanWrapper message);
+
+    BigDecimalWrapper encipher(BigDecimal value);
+
+    BigDecimal decipher(BigDecimalWrapper message);
 }

@@ -28,6 +28,10 @@ public class NumberComposer implements IntConsumer {
         return Long.valueOf(buffer.toString());
     }
 
+    public Short getShort() {
+        return Short.valueOf(buffer.toString());
+    }
+
     public BigDecimal getBigDecimal() {
         return new BigDecimal(buffer.toString());
     }
