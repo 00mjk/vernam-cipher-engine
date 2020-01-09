@@ -7,7 +7,7 @@ common encryption methods, it doesn't use an algorithm to obscure the data or ma
 password which, once gained, will reveal all the data. It is considered "infomation-theoretically secure" - perfect secrecy.
 
 Instead it uses a fast and simple method of generating random numbers and letters which are added to the original. If the result after 
-addtion is found to be larger than the maximum value, the modulo of the total set sizd is used to wrap the results. To decipher, one simply subtracts the keys or one time pad from the enciphered value (see the wiki link below for more information).
+addtion is found to be larger than the maximum value, the modulo of the total set size is used to wrap the results. To decipher, one simply subtracts the keys or one time pad from the enciphered value (see the wiki link below for more information).
 
 Because the cipher is based on addition/subtraction, it is extremely fast in operation.
 
