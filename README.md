@@ -11,13 +11,10 @@ addtion is found to be larger than the maximum value, the modulo of the total se
 
 Because the cipher is based on addition/subtraction, it is extremely fast in operation.
 
-As a practical matter it means that data stored at rest is junk and random data. Without both the encrypted data and the keys, the data is
-valueless. By storing the keys in a separate database, it thwarts hacking while making its use in any integration both simple
+As a practical matter it means that data stored at rest is junk and random data. The enciphered data is as random as the pad that enciphered it. Both the one time pad and the enciphered data are required in order to restore the original message.  By storing the values in separate databases, it thwarts hacking while making its use in any integration both simple
 and fast. The only time the data exists is when it is reconstructed on the wire during processing. 
 
-The current implementation uses Java SecureRandom for its random generator but plans are to add other connectors in the future for other
-generators perhaps with connections to HotBits or other radioactive sources of randomness. Additionally it may well be that the stream
-of random numbers used will come from multiple PRNGs to ensure no detectable patterns. During the encryption process, some random digits
+The current implementation uses Java SecureRandom for its random generator. During the encryption process, some random digits
 are thrown out as a result of processing. Even if a weaker PRNG were used, the store for random one time pads would be informationally 
 incomplete making it impossible to determine the random stream. Finally, it must be noted that the one time pads, after
 generation, will be stored in a database which will result in generation order being lost which makes it impossible to reconstruct the stream. Even if the one time pads or their enciphered twin were published in clear text on the web, no useful data could be extracted - perfect secrecy.
