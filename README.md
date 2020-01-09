@@ -24,7 +24,7 @@ one-time pad by Shannon about the same time. His result was published in the Bel
 Properly used, one-time pads are secure in this sense even against adversaries with infinite computational power.
 
 Claude Shannon proved, using information theory, that the one-time pad has a property he termed perfect secrecy; 
-that is, the ciphertext gives absolutely no additional information about the plaintext This is because, given a truly 
+that is, the ciphertext gives absolutely no additional information about the plaintext. This is because, given a truly 
 random key that is used only once, a ciphertext can be translated into any plaintext of the same length, and all are equally likely. 
 Thus, the a priori probability of a plaintext message M is the same as the a posteriori probability of a plaintext message M given 
 the corresponding ciphertext"
