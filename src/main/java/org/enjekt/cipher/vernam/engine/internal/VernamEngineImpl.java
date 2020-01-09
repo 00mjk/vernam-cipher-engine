@@ -58,5 +58,14 @@ public class VernamEngineImpl {
 	    public BigDecimal decipherBigDecimal(ObjectWrapper message) {
 	        return (BigDecimal) cipherEngine.decipher(message);
 	    }
+	    
+	    public ObjectWrapper encipherObject(Object value) {
+	        return cipherEngine.encipher(value);
+	    }
+
+
+	    public Object decipherObject(ObjectWrapper message) {
+	        return cipherEngine.decipher(message);
+	    }
 
 }
