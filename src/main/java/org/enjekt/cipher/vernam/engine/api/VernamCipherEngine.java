@@ -23,4 +23,8 @@ public interface VernamCipherEngine {
     BigDecimalWrapper encipher(BigDecimal value);
 
     BigDecimal decipher(BigDecimalWrapper message);
+
+	<T> T decipherObject(ObjectWrapper message, Class<T> clazz);
+
+	ObjectWrapper encipherObject(Object value);
 }

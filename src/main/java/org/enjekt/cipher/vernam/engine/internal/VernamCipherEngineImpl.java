@@ -5,7 +5,17 @@ import org.enjekt.cipher.vernam.engine.internal.cipherengines.*;
 import org.osgi.service.component.annotations.Component;
 
 import java.math.BigDecimal;
-
+/**
+ * The cipher engines preserve the type of what is passed into them in the
+ * returned pad and padded value. This permits drop in use in databases where schema
+ * changes would be problematic.
+ * 
+ * The sole exception is the Object encipher/decipher which uses Serialization and so returns
+ * byte[] for both the pad and padded value. 
+ * 
+ * @author Ranx
+ *
+ */
 @Component
 public class VernamCipherEngineImpl implements VernamCipherEngine {
 
@@ -14,6 +24,7 @@ public class VernamCipherEngineImpl implements VernamCipherEngine {
     private final LongCipherEngine longCipherEngine = new LongCipherEngine();
     private final FloatCipherEngine floatCipherEngine = new FloatCipherEngine();
     private final BooleanCipherEngine booleanCipherEngine = new BooleanCipherEngine();
+	private final ObjectCipherEngine objectCipherEngine = new ObjectCipherEngine();
 
     @Override
     public StringWrapper encipher(String messageToEncrypt) {
@@ -64,6 +75,16 @@ public class VernamCipherEngineImpl implements VernamCipherEngine {
     @Override
     public BigDecimal decipher(BigDecimalWrapper message) {
         return floatCipherEngine.decipher(message);
+    }
+    
+    @Override
+    public ObjectWrapper encipherObject(Object value) {
+        return objectCipherEngine .encipher(value);
+    }
+
+    @Override
+    public <T> T decipherObject(ObjectWrapper message, Class<T> clazz) {
+        return (T) objectCipherEngine.decipher(message);
     }
 
 }

@@ -6,10 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Base64.Decoder;
-import java.util.Base64.Encoder;
+
 
 import org.enjekt.cipher.vernam.engine.api.ObjectWrapper;
 import org.enjekt.cipher.vernam.engine.internal.util.RandomNumberGenerator;
